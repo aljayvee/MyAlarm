@@ -55,6 +55,7 @@ private val soundsList = listOf(
     SoundItem("Medium Bell", "Resonant metallic bell ringing near", true),
     SoundItem("Short Beeps", "Quick alarm notification beeps", true),
     SoundItem("Clown Horn", "Funny circus comedy honk sound", true),
+    SoundItem("Mixue", "Viral theme song of Mixue Ice Cream & Tea", true),
     SoundItem("Wake Up", "Energizing modern morning melody", false),
     SoundItem("Nature", "Calming acoustic synth melody", false),
     SoundItem("Digital Watch", "Beeping of a digital wristwatch", false),
@@ -133,6 +134,7 @@ fun SoundPickerScreen(
                         "Alien Beam" -> "alien_beam"
                         "Electric Ring" -> "electric_ring_long"
                         "High Low Sweep" -> "high_to_low_sweep"
+                        "Mixue" -> "mixue"
                         else -> "basic_alarm"
                     }
                     val resId = context.resources.getIdentifier(resName, "raw", packageName)
