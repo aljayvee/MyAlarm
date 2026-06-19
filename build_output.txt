@@ -1,0 +1,87 @@
+﻿Reusing configuration cache.
+> Task :app:preBuild UP-TO-DATE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:generateDebugResources
+> Task :app:generateDebugGlobalSynthetics UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:processDebugNavigationResources
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:packageDebugResources
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:mergeDebugNativeLibs UP-TO-DATE
+> Task :app:stripDebugDebugSymbols UP-TO-DATE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:parseDebugLocalResources
+> Task :app:generateDebugRFile UP-TO-DATE
+> Task :app:kspDebugKotlin
+> Task :app:mergeDebugResources
+.\gradlew.bat : Fatal error while executing main with args: 
+--proto_config=C:\Users\jiane\.android\utp\runnerConfig4804140124479732390.pb
+At line:1 char:1
++ .\gradlew.bat assembleDebug 2>&1 | Out-File -FilePath "build_output.t ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Fatal error whi...124479732390.pb:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+java.lang.NullPointerException: Cannot invoke 
+"ksp.com.intellij.openapi.application.Application.getService(java.lang.Class)" because the return value of 
+"ksp.com.intellij.openapi.application.ApplicationManager.getApplication()" is null
+	at ksp.com.intellij.openapi.fileEditor.FileDocumentManager.getInstance(FileDocumentManager.java:35)
+	at ksp.com.intellij.openapi.fileTypes.BinaryFileTypeDecompilers.lambda$notifyDecompilerSetChange$1(BinaryFileTypeDecom
+pilers.java:29)
+	at java.desktop/java.awt.event.InvocationEvent.dispatch(Unknown Source)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.desktop/java.awt.EventQueue$4.run(Unknown Source)
+	at java.desktop/java.awt.EventQueue$4.run(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Unknown Source)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.desktop/java.awt.EventDispatchThread.run(Unknown Source)
+> Task :app:processDebugResources
+> Task :app:compileDebugKotlin
+w: file:///C:/Users/jiane/Downloads/MyAlarm/app/src/main/java/com/application/myalarm/mission/StepCountMission.kt:122:57 'val Icons.Filled.DirectionsRun: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.DirectionsRun.
+w: file:///C:/Users/jiane/Downloads/MyAlarm/app/src/main/java/com/application/myalarm/ui/alarms/AlarmEditScreen.kt:308:63 'val Icons.Filled.DirectionsRun: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.DirectionsRun.
+w: file:///C:/Users/jiane/Downloads/MyAlarm/app/src/main/java/com/application/myalarm/ui/alarms/AlarmEditScreen.kt:516:54 'val Icons.Filled.VolumeDown: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.VolumeDown.
+w: file:///C:/Users/jiane/Downloads/MyAlarm/app/src/main/java/com/application/myalarm/ui/alarms/AlarmEditScreen.kt:528:54 'val Icons.Filled.VolumeUp: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.VolumeUp.
+w: file:///C:/Users/jiane/Downloads/MyAlarm/app/src/main/java/com/application/myalarm/ui/alarms/AlarmEditScreen.kt:663:26 'val LocalLifecycleOwner: ProvidableCompositionLocal<LifecycleOwner>' is deprecated. Moved to lifecycle-runtime-compose library in androidx.lifecycle.compose package.
+w: file:///C:/Users/jiane/Downloads/MyAlarm/app/src/main/java/com/application/myalarm/ui/alarms/MissionPickerScreen.kt:152:53 'val Icons.Filled.DirectionsRun: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.DirectionsRun.
+w: file:///C:/Users/jiane/Downloads/MyAlarm/app/src/main/java/com/application/myalarm/ui/alarms/SoundPickerScreen.kt:221:58 'val Icons.Filled.VolumeDown: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.VolumeDown.
+w: file:///C:/Users/jiane/Downloads/MyAlarm/app/src/main/java/com/application/myalarm/ui/alarms/SoundPickerScreen.kt:236:58 'val Icons.Filled.VolumeUp: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.VolumeUp.
+w: file:///C:/Users/jiane/Downloads/MyAlarm/app/src/main/java/com/application/myalarm/ui/onboarding/OnboardingScreen.kt:81:26 'val LocalLifecycleOwner: ProvidableCompositionLocal<LifecycleOwner>' is deprecated. Moved to lifecycle-runtime-compose library in androidx.lifecycle.compose package.
+w: file:///C:/Users/jiane/Downloads/MyAlarm/app/src/main/java/com/application/myalarm/ui/onboarding/OnboardingScreen.kt:287:61 'val Icons.Filled.ArrowForward: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Filled.ArrowForward.
+w: file:///C:/Users/jiane/Downloads/MyAlarm/app/src/main/java/com/application/myalarm/ui/settings/SettingsScreen.kt:58:26 'val LocalLifecycleOwner: ProvidableCompositionLocal<LifecycleOwner>' is deprecated. Moved to lifecycle-runtime-compose library in androidx.lifecycle.compose package.
+
+> Task :app:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:processDebugJavaRes UP-TO-DATE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:dexBuilderDebug
+> Task :app:mergeProjectDexDebug
+> Task :app:packageDebug
+> Task :app:assembleDebug
+> Task :app:createDebugApkListingFileRedirect
+
+BUILD SUCCESSFUL in 4m 6s
+37 actionable tasks: 13 executed, 24 up-to-date
+Configuration cache entry reused.

@@ -1,0 +1,171 @@
+package com.application.myalarm.ui.navigation
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Alarm
+import androidx.compose.material.icons.filled.Assessment
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.application.myalarm.ui.alarms.AlarmEditScreen
+import com.application.myalarm.ui.alarms.AlarmEditViewModel
+import com.application.myalarm.ui.alarms.AlarmsScreen
+import com.application.myalarm.ui.alarms.MissionPickerScreen
+import com.application.myalarm.ui.alarms.SoundPickerScreen
+import com.application.myalarm.ui.home.HomeScreen
+import com.application.myalarm.ui.insights.InsightsScreen
+import com.application.myalarm.ui.settings.SettingsScreen
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.foundation.background
+import com.application.myalarm.AlarmApplication
+import com.application.myalarm.ui.onboarding.OnboardingScreen
+
+private val OrangePrimary = Color(0xFFFF8C00)
+private val OrangeLight = Color(0xFFFFF3E0)
+private val SubtitleGray = Color(0xFF9E9E9E)
+private val DarkText = Color(0xFF2D2D2D)
+
+@Composable
+fun AppNavigation() {
+    val context = LocalContext.current
+    val app = context.applicationContext as AlarmApplication
+    val userPrefs = app.userPreferences
+    val onboardingCompleted by userPrefs.onboardingCompleted.collectAsState(initial = null)
+    val selectedLanguage by userPrefs.selectedLanguage.collectAsState(initial = "en")
+
+    LaunchedEffect(selectedLanguage) {
+        val matchedLang = com.application.myalarm.util.Localizer.Language.values().find { it.code == selectedLanguage } ?: com.application.myalarm.util.Localizer.Language.ENGLISH
+        com.application.myalarm.util.Localizer.currentLanguage = matchedLang
+    }
+
+    if (onboardingCompleted == null) {
+        // Simple loading screen
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFFFFF8F0)),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(color = OrangePrimary)
+        }
+        return
+    }
+
+    if (onboardingCompleted == false) {
+        OnboardingScreen(onComplete = {})
+        return
+    }
+
+    var currentRoute by remember { mutableStateOf("home") }
+    val backStack = remember { mutableStateListOf("home") }
+    
+    // Lift the editViewModel so that selected mission/sound changes are retained
+    val editViewModel: AlarmEditViewModel = viewModel()
+
+    val navigate = { route: String ->
+        backStack.add(route)
+        currentRoute = route
+    }
+
+    val navigateBack = {
+        if (backStack.size > 1) {
+            backStack.removeAt(backStack.lastIndex)
+            currentRoute = backStack.last()
+        }
+    }
+
+    Scaffold(
+        bottomBar = {
+            if (currentRoute in listOf("home", "alarms", "insights", "settings")) {
+                NavigationBar(containerColor = Color.White) {
+                    val tabs = listOf(
+                        Triple("home", "Home", Icons.Default.Home),
+                        Triple("alarms", "Alarms", Icons.Default.Alarm),
+                        Triple("insights", "Insights", Icons.Default.Assessment),
+                        Triple("settings", "Settings", Icons.Default.Settings)
+                    )
+                    
+                    tabs.forEach { (route, label, icon) ->
+                        val isSelected = currentRoute == route
+                        NavigationBarItem(
+                            selected = isSelected,
+                            onClick = {
+                                if (currentRoute != route) {
+                                    backStack.clear()
+                                    backStack.add(route)
+                                    currentRoute = route
+                                }
+                            },
+                            label = { 
+                                Text(
+                                    text = com.application.myalarm.util.Localizer.t(label), 
+                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                    fontSize = 11.sp
+                                ) 
+                            },
+                            icon = { Icon(icon, contentDescription = label) },
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = OrangePrimary,
+                                selectedTextColor = OrangePrimary,
+                                unselectedIconColor = SubtitleGray,
+                                unselectedTextColor = SubtitleGray,
+                                indicatorColor = OrangeLight
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            when {
+                currentRoute == "home" -> {
+                    HomeScreen(onNavigate = navigate)
+                }
+                currentRoute == "alarms" -> {
+                    AlarmsScreen(onNavigate = navigate)
+                }
+                currentRoute == "insights" -> {
+                    InsightsScreen()
+                }
+                currentRoute == "settings" -> {
+                    SettingsScreen()
+                }
+                currentRoute.startsWith("alarm_edit/") -> {
+                    val alarmId = currentRoute.substringAfter("alarm_edit/").toLongOrNull() ?: -1L
+                    AlarmEditScreen(
+                        alarmId = alarmId,
+                        viewModel = editViewModel,
+                        onNavigate = navigate,
+                        onBack = navigateBack
+                    )
+                }
+                currentRoute == "mission_picker" -> {
+                    MissionPickerScreen(
+                        viewModel = editViewModel,
+                        onBack = navigateBack
+                    )
+                }
+                currentRoute == "sound_picker" -> {
+                    SoundPickerScreen(
+                        viewModel = editViewModel,
+                        onBack = navigateBack
+                    )
+                }
+            }
+        }
+    }
+}

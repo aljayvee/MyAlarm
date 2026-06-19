@@ -1,0 +1,80 @@
+<resources>
+    <string name="app_name">Alarm</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_alarms">Alarms</string>
+    <string name="nav_insights">Insights</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Home Screen -->
+    <string name="today">Today</string>
+    <string name="todays_wake_up">Today\'s Wake Up</string>
+    <string name="history">History</string>
+
+    <!-- Alarms Screen -->
+    <string name="new_alarm">New alarm</string>
+    <string name="alarm_count">%d alarms</string>
+    <string name="delete_alarm">Delete alarm</string>
+    <string name="delete_alarm_confirm">Are you sure you want to delete this alarm?</string>
+
+    <!-- Alarm Edit Screen -->
+    <string name="save">Save</string>
+    <string name="label">LABEL</string>
+    <string name="optional_label">Optional label</string>
+    <string name="repeat">REPEAT</string>
+    <string name="mission">MISSION</string>
+    <string name="tap_to_change">Tap to change</string>
+    <string name="sound">SOUND</string>
+    <string name="backup_alarm">BACKUP ALARM</string>
+    <string name="backup_fire">Backup fire</string>
+    <string name="fire_again_after">Fire again after (min)</string>
+    <string name="backup_alarm_description">If you don\'t dismiss within the chosen window, the alarm fires again automatically.</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Mission Picker -->
+    <string name="choose_mission">Choose mission</string>
+    <string name="free">FREE</string>
+    <string name="premium">PREMIUM</string>
+
+    <!-- Sound Picker -->
+    <string name="alarm_sound">Alarm sound</string>
+    <string name="sound_preview_hint">Tap ▶ to preview.</string>
+
+    <!-- Insights Screen -->
+    <string name="current_streak">Current streak</string>
+    <string name="days_format">%d days</string>
+    <string name="lifetime_stats">Lifetime stats</string>
+    <string name="best_streak">Best streak</string>
+    <string name="dismisses">Dismisses</string>
+    <string name="success_rate">Success rate</string>
+    <string name="avg_time">Avg time</string>
+    <string name="skipped">Skipped</string>
+    <string name="total_runs">Total runs</string>
+    <string name="last_4_weeks">Last 4 weeks</string>
+    <string name="success">Success</string>
+    <string name="no_run">No run</string>
+    <string name="by_mission">By mission</string>
+    <string name="recent_missions">Recent missions</string>
+
+    <!-- Settings Screen -->
+    <string name="permissions">PERMISSIONS</string>
+    <string name="notifications">Notifications</string>
+    <string name="notifications_allowed">Allowed — alarms can post lock-screen banners.</string>
+    <string name="notifications_denied">Not granted — tap to allow.</string>
+    <string name="notifications_helper">Without notifications Android won\'t show the alarm banner — and on Android 14+ the full-screen alarm UI is blocked too.</string>
+    <string name="about">ABOUT</string>
+    <string name="version">Version</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="privacy_policy">Privacy Policy</string>
+
+    <!-- Alarm Ringing -->
+    <string name="alarm_ringing">Alarm ringing</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="complete_mission">Complete the mission to dismiss</string>
+
+    <!-- Notification Channel -->
+    <string name="alarm_channel_name">Alarm</string>
+    <string name="alarm_channel_description">Alarm notifications</string>
+</resources>
