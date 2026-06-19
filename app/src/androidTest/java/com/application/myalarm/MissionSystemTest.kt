@@ -74,7 +74,8 @@ class MissionSystemTest {
 
         composeTestRule.setContent {
             AffirmationMission(onMissionComplete = { missionCompleted = true })
-        }        val targetAffirmations = listOf(
+        }
+        val targetAffirmations = listOf(
             "I am grateful for this new day and its opportunities",
             "I choose to be happy, healthy, and positive today",
             "I am capable of achieving all my goals today",
@@ -110,7 +111,8 @@ class MissionSystemTest {
 
         composeTestRule.setContent {
             TypingMission(onMissionComplete = { missionCompleted = true })
-        }        val targetSentences = listOf(
+        }
+        val targetSentences = listOf(
             "The early bird catches the worm.",
             "A journey of a thousand miles begins with a single step.",
             "Every morning brings new potential, utilize it.",
