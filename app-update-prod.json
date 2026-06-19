@@ -1,0 +1,7 @@
+{
+  "latestVersionCode": 2,
+  "latestVersionName": "1.1.0",
+  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v1.1.0/alarm-prod.apk",
+  "forceUpdate": true,
+  "releaseNotes": "Official Release: Brand new SnoozeOff launcher icon and multi-OEM lock screen compatibility fixes."
+}
