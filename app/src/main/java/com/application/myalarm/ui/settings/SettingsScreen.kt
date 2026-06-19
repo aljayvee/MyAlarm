@@ -49,6 +49,8 @@ fun SettingsScreen(
     val overlayPermissionGranted by viewModel.overlayPermissionGranted.collectAsState()
     val selectedLanguage by viewModel.selectedLanguage.collectAsState()
     var isLanguageDropdownExpanded by remember { mutableStateOf(false) }
+    var isCheckingForUpdate by remember { mutableStateOf(false) }
+    var updateInfo by remember { mutableStateOf<com.application.myalarm.update.AppUpdateInfo?>(null) }
 
     val isOemDevice = remember { OemSettingsHelper.isOemDevice() }
     val manufacturerCapitalized = remember {
@@ -217,6 +219,72 @@ fun SettingsScreen(
         }
 
         item {
+            SectionHeader(Localizer.t("Updates"))
+        }
+
+        item {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(containerColor = CardWhite),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(enabled = !isCheckingForUpdate) {
+                            isCheckingForUpdate = true
+                            com.application.myalarm.update.AppUpdateChecker.checkForUpdate(context) { info ->
+                                isCheckingForUpdate = false
+                                if (info != null) {
+                                    updateInfo = info
+                                } else {
+                                    android.widget.Toast.makeText(context, Localizer.t("Your app is up to date!"), android.widget.Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = if (isCheckingForUpdate) Icons.Default.Sync else Icons.Default.SystemUpdate,
+                        contentDescription = "Check for Updates",
+                        tint = SubtitleGray,
+                        modifier = Modifier.size(22.dp)
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = Localizer.t("Check for Updates"),
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = DarkText
+                        )
+                        Text(
+                            text = if (isCheckingForUpdate) Localizer.t("Checking...") else Localizer.t("Tap to check for new version"),
+                            fontSize = 12.sp,
+                            color = SubtitleGray
+                        )
+                    }
+                    if (isCheckingForUpdate) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(18.dp),
+                            strokeWidth = 2.dp,
+                            color = OrangePrimary
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Default.ChevronRight,
+                            contentDescription = null,
+                            tint = SubtitleGray,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                }
+            }
+        }
+
+        item {
             SectionHeader(Localizer.t("ABOUT"))
         }
 
@@ -227,6 +295,17 @@ fun SettingsScreen(
         item {
             Spacer(modifier = Modifier.height(100.dp))
         }
+    }
+
+    updateInfo?.let { info ->
+        com.application.myalarm.ui.navigation.AppUpdateDialog(
+            updateInfo = info,
+            onDismiss = {
+                if (!info.forceUpdate) {
+                    updateInfo = null
+                }
+            }
+        )
     }
 }
 
