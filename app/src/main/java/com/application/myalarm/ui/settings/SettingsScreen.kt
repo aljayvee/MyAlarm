@@ -519,7 +519,7 @@ private fun AboutCard() {
                     modifier = Modifier.weight(1f)
                 )
                 Text(
-                    text = "1.2.0.3",
+                    text = com.application.myalarm.BuildConfig.VERSION_NAME,
                     fontSize = 15.sp,
                     color = SubtitleGray
                 )
