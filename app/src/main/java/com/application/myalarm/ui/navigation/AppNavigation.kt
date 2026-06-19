@@ -359,7 +359,7 @@ fun AppUpdateDialog(
         dismissButton = {
             if (!updateInfo.forceUpdate && !isDownloading) {
                 TextButton(onClick = onDismiss) {
-                    Text("Later", color = SubtitleGray)
+                    Text("Back", color = SubtitleGray)
                 }
             }
         },
