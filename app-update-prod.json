@@ -3,5 +3,5 @@
   "latestVersionName": "1.1.4",
   "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v1.1.4/alarm-prod.apk",
   "forceUpdate": true,
-  "releaseNotes": "Fixed an issue where the update function are unstable."
+  "releaseNotes": "Added: A return button for the update pop-up message.\nCorrected the name of the app from 'SnoozeOff' to 'Alarm'.."
 }
