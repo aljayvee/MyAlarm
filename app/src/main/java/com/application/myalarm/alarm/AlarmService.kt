@@ -176,6 +176,7 @@ class AlarmService : Service() {
             "Electric Ring" -> "electric_ring_long"
             "High Low Sweep" -> "high_to_low_sweep"
             "Mixue" -> "mixue"
+            "Why Your Room" -> "weishime_ni_de_fang"
             else -> "basic_alarm"
         }
         val resId = context.resources.getIdentifier(resName, "raw", packageName)
