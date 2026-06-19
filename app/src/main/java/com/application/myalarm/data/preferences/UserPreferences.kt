@@ -20,6 +20,7 @@ class UserPreferences(private val context: Context) {
         val NOTIFICATION_PERMISSION_ASKED = booleanPreferencesKey("notification_permission_asked")
         val SELECTED_LANGUAGE = stringPreferencesKey("selected_language")
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
+        val LAST_VERSION_CODE = intPreferencesKey("last_version_code")
     }
 
     val currentStreak: Flow<Int> = context.dataStore.data.map { prefs ->
@@ -44,6 +45,10 @@ class UserPreferences(private val context: Context) {
 
     val onboardingCompleted: Flow<Boolean> = context.dataStore.data.map { prefs ->
         prefs[ONBOARDING_COMPLETED] ?: false
+    }
+
+    val lastVersionCode: Flow<Int> = context.dataStore.data.map { prefs ->
+        prefs[LAST_VERSION_CODE] ?: 0
     }
 
     suspend fun updateStreak(newStreak: Int) {
@@ -79,6 +84,12 @@ class UserPreferences(private val context: Context) {
     suspend fun setOnboardingCompleted(completed: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[ONBOARDING_COMPLETED] = completed
+        }
+    }
+
+    suspend fun updateLastVersionCode(code: Int) {
+        context.dataStore.edit { prefs ->
+            prefs[LAST_VERSION_CODE] = code
         }
     }
 }
