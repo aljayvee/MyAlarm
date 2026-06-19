@@ -1883,6 +1883,14 @@ object Localizer {
         "Pitch-sweeping alert sound effect" to mapOf(
             Language.CHINESE_SIMPLIFIED to "音调起伏的扫频警报声", Language.CHINESE_TRADITIONAL to "音調起伏的掃頻警報聲", Language.CHINESE_PINYIN to "Yīn diào qǐ fú de sǎo pín jǐng bào shēng",
             Language.ARABIC to "تأثير صوتي لتنبيه مغير طبقة الصوت", Language.TAGALOG to "Tunog ng nagbabagong tono ng alarma", Language.THAI to "เอฟเฟกต์เสียงเตือนแบบกวาดระดับเสียง", Language.HINDI to "पिच-स्वीपिंग अलर्ट ध्वनि प्रभाव", Language.CANTONESE to "音調起伏嘅掃頻警報聲"
+        ),
+        "Mixue" to mapOf(
+            Language.CHINESE_SIMPLIFIED to "蜜雪冰城", Language.CHINESE_TRADITIONAL to "蜜雪冰城", Language.CHINESE_PINYIN to "Mì xuě bīng chéng",
+            Language.ARABIC to "ميكسو", Language.TAGALOG to "Mixue", Language.THAI to "มิกซู", Language.HINDI to "मिक्स्यू", Language.CANTONESE to "蜜雪冰城"
+        ),
+        "Viral theme song of Mixue Ice Cream & Tea" to mapOf(
+            Language.CHINESE_SIMPLIFIED to "蜜雪冰城主题曲", Language.CHINESE_TRADITIONAL to "蜜雪冰城主題曲", Language.CHINESE_PINYIN to "Mì xuě bīng chéng zhǔ tí qǔ",
+            Language.ARABIC to "أغنية ميكسو الشهيرة", Language.TAGALOG to "Viral na theme song ng Mixue", Language.THAI to "เพลงธีมไวรัลของมิกซู", Language.HINDI to "मिक्स्यू का वायरल थीम सॉन्ग", Language.CANTONESE to "蜜雪冰城主題曲"
         )
 )
 

@@ -239,7 +239,7 @@ fun SettingsScreen(
                                 if (info != null) {
                                     updateInfo = info
                                 } else {
-                                    android.widget.Toast.makeText(context, Localizer.t("Your app is up to date!"), android.widget.Toast.LENGTH_SHORT).show()
+                                    android.widget.Toast.makeText(context, Localizer.t("The app is up to date!"), android.widget.Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }

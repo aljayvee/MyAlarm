@@ -29,7 +29,8 @@ class RingtoneTest {
         "Computer Sounds" to "assorted_computer_sounds",
         "Alien Beam" to "alien_beam",
         "Electric Ring" to "electric_ring_long",
-        "High Low Sweep" to "high_to_low_sweep"
+        "High Low Sweep" to "high_to_low_sweep",
+        "Mixue" to "mixue"
     )
 
     @Test
