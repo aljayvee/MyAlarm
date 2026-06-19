@@ -1,7 +1,7 @@
 {
   "latestVersionCode": 4,
   "latestVersionName": "1.1.4",
-  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v1.1.0/alarm-prod.apk",
+  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v1.1.4/alarm-prod.apk",
   "forceUpdate": true,
   "releaseNotes": "Fixed an issue where the update function are unstable."
 }
