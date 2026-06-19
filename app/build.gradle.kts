@@ -21,7 +21,15 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix = ".dev"
+            manifestPlaceholders["appName"] = "Alarm dev"
+            buildConfigField("String", "UPDATE_JSON_URL", "\"https://raw.githubusercontent.com/aljayvee/MyAlarm/dev/app-update-dev.json\"")
+        }
         release {
+            applicationIdSuffix = ".prod"
+            manifestPlaceholders["appName"] = "Alarm prod"
+            buildConfigField("String", "UPDATE_JSON_URL", "\"https://raw.githubusercontent.com/aljayvee/MyAlarm/main/app-update-prod.json\"")
             optimization {
                 enable = false
             }
@@ -33,6 +41,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 

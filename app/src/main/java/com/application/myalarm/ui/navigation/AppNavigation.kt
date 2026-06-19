@@ -28,6 +28,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.background
 import com.application.myalarm.AlarmApplication
 import com.application.myalarm.ui.onboarding.OnboardingScreen
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.unit.dp
 
 private val OrangePrimary = Color(0xFFFF8C00)
 private val OrangeLight = Color(0xFFFFF3E0)
@@ -41,6 +47,27 @@ fun AppNavigation() {
     val userPrefs = app.userPreferences
     val onboardingCompleted by userPrefs.onboardingCompleted.collectAsState(initial = null)
     val selectedLanguage by userPrefs.selectedLanguage.collectAsState(initial = "en")
+
+    var updateInfo by remember { mutableStateOf<com.application.myalarm.update.AppUpdateInfo?>(null) }
+
+    LaunchedEffect(onboardingCompleted) {
+        if (onboardingCompleted == true) {
+            com.application.myalarm.update.AppUpdateChecker.checkForUpdate(context) { info ->
+                updateInfo = info
+            }
+        }
+    }
+
+    updateInfo?.let { info ->
+        AppUpdateDialog(
+            updateInfo = info,
+            onDismiss = {
+                if (!info.forceUpdate) {
+                    updateInfo = null
+                }
+            }
+        )
+    }
 
     LaunchedEffect(selectedLanguage) {
         val matchedLang = com.application.myalarm.util.Localizer.Language.values().find { it.code == selectedLanguage } ?: com.application.myalarm.util.Localizer.Language.ENGLISH
@@ -169,3 +196,74 @@ fun AppNavigation() {
         }
     }
 }
+
+@Composable
+fun AppUpdateDialog(
+    updateInfo: com.application.myalarm.update.AppUpdateInfo,
+    onDismiss: () -> Unit
+) {
+    val context = LocalContext.current
+    AlertDialog(
+        onDismissRequest = {
+            if (!updateInfo.forceUpdate) {
+                onDismiss()
+            }
+        },
+        title = {
+            Text(
+                text = "New Update Available",
+                fontWeight = FontWeight.Bold,
+                color = DarkText
+            )
+        },
+        text = {
+            Column {
+                Text(
+                    text = "A new version (${updateInfo.latestVersionName}) is available. Please update to get the latest features and fixes.",
+                    color = DarkText,
+                    fontSize = 14.sp
+                )
+                if (!updateInfo.releaseNotes.isNullOrEmpty()) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "What's New:",
+                        fontWeight = FontWeight.SemiBold,
+                        color = OrangePrimary,
+                        fontSize = 12.sp
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = updateInfo.releaseNotes,
+                        color = SubtitleGray,
+                        fontSize = 12.sp
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(updateInfo.apkUrl))
+                        context.startActivity(intent)
+                    } catch (e: Exception) {
+                        // Fallback
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = OrangePrimary)
+            ) {
+                Text("Update", color = Color.White)
+            }
+        },
+        dismissButton = {
+            if (!updateInfo.forceUpdate) {
+                TextButton(onClick = onDismiss) {
+                    Text("Later", color = SubtitleGray)
+                }
+            }
+        },
+        containerColor = Color.White,
+        shape = androidx.compose.foundation.shape.RoundedCornerShape(20.dp)
+    )
+}
+
