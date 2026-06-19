@@ -1,0 +1,7 @@
+{
+  "latestVersionCode": 2,
+  "latestVersionName": "1.0.1-DEV",
+  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v1.0.1-dev/alarm-dev.apk",
+  "forceUpdate": false,
+  "releaseNotes": "Fix overlay layout bugs and update launcher icon."
+}
