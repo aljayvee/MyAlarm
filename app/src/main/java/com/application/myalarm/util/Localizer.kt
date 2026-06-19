@@ -1899,6 +1899,56 @@ object Localizer {
         "Lively Chinese pop rhythm tune" to mapOf(
             Language.CHINESE_SIMPLIFIED to "欢快动听的中文流行节奏歌曲", Language.CHINESE_TRADITIONAL to "歡快動聽的中文流行節奏歌曲", Language.CHINESE_PINYIN to "Huān kuài dòng tīng de zhōng wén liú xíng jié zòu gē qǔ",
             Language.ARABIC to "لحن البوب الصيني المبهج", Language.TAGALOG to "Masiglang himig ng musikang pop ng Tsina", Language.THAI to "ทำนองเพลงป๊อปจีนที่ร่าเริงและมีชีวิตชีวา", Language.HINDI to "जीवंत चीनी पॉप लय धुन", Language.CANTONESE to "歡快動聽的中文流行節奏歌曲"
+        ),
+        "Without these permissions, the alarm may not ring reliably, or you might easily bypass the wake-up missions." to mapOf(
+            Language.CHINESE_SIMPLIFIED to "如果没有这些权限，闹钟可能无法可靠响铃，或者您可能会轻易绕过唤醒任务。",
+            Language.CHINESE_TRADITIONAL to "如果沒有這些權限，鬧鐘可能無法可靠響鈴，或者您可能會輕易繞過喚醒任務。",
+            Language.CHINESE_PINYIN to "Rú guǒ méi yǒu zhè xiē quán xiàn, nào zhōng kě néng wú fǎ kě kào xiǎng líng, huò zhě nín kě néng huì qīng yì rào guò huàn xǐng rèn wù.",
+            Language.ARABIC to "بدون هذه الأذونات، قد لا يرن المنبه بشكل موثوق، أو قد تتجاوز مهام الاستيقاظ بسهولة.",
+            Language.TAGALOG to "Kung wala ang mga pahintulot na ito, maaaring hindi tumunog nang maaasahan ang alarm, o madali mong maiiwasan ang mga mission sa paggising.",
+            Language.THAI to "หากไม่มีสิทธิ์เหล่านี้ เสียงเตือนอาจไม่ดังอย่างน่าเชื่อถือ หรือคุณอาจหลีกเลี่ยงภารกิจปลุกได้อย่างง่ายดาย",
+            Language.HINDI to "इन अनुमतियों के बिना, अलार्म ठीक से नहीं बज सकता है, या आप आसानी से जागने के मिशन को छोड़ सकते हैं।",
+            Language.CANTONESE to "如果沒有這些權限，鬧鐘可能無法可靠響鈴，或者您可能會輕易繞過喚醒任務。"
+        ),
+        "Required to trigger wake-up notifications. Without this, the app cannot show background alarm alerts or status bar indicators." to mapOf(
+            Language.CHINESE_SIMPLIFIED to "用于触发唤醒通知。如果没有此权限，应用将无法在后台显示闹钟提醒或状态栏指示。",
+            Language.CHINESE_TRADITIONAL to "用於觸發喚醒通知。如果沒有此權限，應用將無法在后台顯示鬧鐘提醒或狀態欄指示。",
+            Language.CHINESE_PINYIN to "Yòng yú chù fā huàn xǐng tōng zhī. Rú guǒ méi yǒu cǐ quán xiàn, yìng yòng jiāng wú fǎ zài hòu tái xiǎn shì nào zhōng tí xǐng huò zhuàng tài lán zhǐ shì.",
+            Language.ARABIC to "مطلوب لتشغيل إشعارات الاستيقاظ. بدون هذا، لا يمكن للتطبيق عرض تنبيهات المنبه في الخلفية أو مؤشرات شريط الحالة.",
+            Language.TAGALOG to "Kinakailangan upang mag-trigger ng mga abiso sa paggising. Kung wala ito, hindi maipakita ng app ang mga alerto sa background o mga indicator sa status bar.",
+            Language.THAI to "จำเป็นต้องเปิดใช้งานการแจ้งเตือนการปลุก หากไม่มีสิ่งนี้ แอปจะไม่สามารถแสดงการแจ้งเตือนพื้นหลังหรือแถบสถานะได้",
+            Language.HINDI to "वेक-अप नोटिफिकेशन को ट्रिगर करने के लिए आवश्यक है। इसके बिना, ऐप बैकग्राउंड अलार्म अलर्ट या स्टेटस बार संकेतक नहीं दिखा सकता है।",
+            Language.CANTONESE to "用於觸發喚醒通知。如果沒有此權限，應用將無法在后台顯示鬧鐘提醒或狀態欄指示。"
+        ),
+        "Required to display overlays over other apps. This ensures the wake-up mission screen pops up immediately, preventing you from using other apps until dismissed." to mapOf(
+            Language.CHINESE_SIMPLIFIED to "用于在其他应用之上显示悬浮窗。这确保唤醒任务界面立即弹出，阻止您在完成任务前使用其他应用。",
+            Language.CHINESE_TRADITIONAL to "用於在其他應用之上顯示懸浮窗。這確保喚醒任務界面立即彈出，阻止您在完成任務前使用其他應用。",
+            Language.CHINESE_PINYIN to "Yòng yú zài qí tā yìng yòng zhī shàng xiǎn shì xuán fú chuāng. Zhè què bǎo huàn xǐng rèn wù jiè miàn lí jí tán chū, zǔ zhǐ nín zài wán chéng rèn wù qián shǐ yòng qí tā yìng yòng。",
+            Language.ARABIC to "مطلوب لعرض تراكبات فوق التطبيقات الأخرى. هذا يضمن ظهور شاشة مهمة الاستيقاظ على الفور، مما يمنعك من استخدام التطبيقات الأخرى حتى يتم إغلاقها.",
+            Language.TAGALOG to "Kinakailangan upang magpakita ng mga overlay sa ibabaw ng iba pang app. Tinitiyak nito na lalabas kaagad ang screen ng mission, na pinipigilan kang gumamit ng iba pang app hanggang sa ma-dismiss.",
+            Language.THAI to "จำเป็นสำหรับการแสดงผลทับแอปอื่น เพื่อให้แน่ใจว่าหน้าจอภารกิจปลุกจะปรากฏขึ้นทันที และป้องกันไม่ให้คุณใช้แอปอื่นจนกว่าจะปิดเสียงเตือน",
+            Language.HINDI to "अन्य ऐप्स के ऊपर ओवरले प्रदर्शित करने के लिए आवश्यक है। यह सुनिश्चित करता है कि वेक-अप मिशन स्क्रीन तुरंत पॉप अप हो, जिससे आप काम पूरा होने तक अन्य ऐप्स का उपयोग न कर सकें।",
+            Language.CANTONESE to "用於在其他應用之上顯示懸浮窗。這確保喚醒任務界面立即彈出，阻止您在完成任務前使用其他應用。"
+        ),
+        "Required to display overlays on the lock screen. This ensures the alarm screen wakes up the device and prompts you to solve the mission directly on lock screen." to mapOf(
+            Language.CHINESE_SIMPLIFIED to "用于在锁屏上显示悬浮窗。这确保闹钟界面唤醒设备，并提示您直接在锁屏上完成任务。",
+            Language.CHINESE_TRADITIONAL to "用於在鎖屏上顯示懸浮窗。這確保鬧鐘界面喚醒設備，並提示您直接在鎖屏上完成任務。",
+            Language.CHINESE_PINYIN to "Yòng yú zài suǒ píng shàng xiǎn shì xuán fú chuāng. Zhè què bǎo nào zhōng jiè miàn huàn xǐng shè bèi, bìng tí shì nín zhí jiē zài suǒ píng shàng wán chéng rèn wù。",
+            Language.ARABIC to "مطلوب لعرض تراكبات على شاشة القفل. هذا يضمن أن شاشة المنبه توقظ الجهاز وتطلب منك حل المهمة مباشرة على شاشة القفل.",
+            Language.TAGALOG to "Kinakailangan upang magpakita ng mga overlay sa lock screen. Tinitiyak nito na gigisingin ng screen ng alarm ang device at hihikayatin kang lutasin ang mission nang direkta sa lock screen.",
+            Language.THAI to "จำเป็นสำหรับการแสดงผลบนหน้าจอล็อก เพื่อให้แน่ใจว่าหน้าจอปลุกจะเปิดหน้าจอขึ้นมาและขอให้คุณทำภารกิจบนหน้าจอล็อกโดยตรง",
+            Language.HINDI to "लॉक स्क्रीन पर ओवरले प्रदर्शित करने के लिए आवश्यक है। यह सुनिश्चित करता है कि अलार्म स्क्रीन डिवाइस को जगाए और आपको सीधे लॉक स्क्रीन पर मिशन को हल करने के लिए प्रेरित करे।",
+            Language.CANTONESE to "用於在鎖屏上顯示懸浮窗。這確保鬧鐘界面喚醒設備，並提示您直接在鎖屏上完成任務。"
+        ),
+        "Required for photo capture and scanning missions. This allows you to complete photo-based or barcode-scanning missions to silence the alarm." to mapOf(
+            Language.CHINESE_SIMPLIFIED to "用于拍照和扫描任务。这允许您通过完成拍照或条形码扫描任务来关闭闹钟。",
+            Language.CHINESE_TRADITIONAL to "用於拍照和掃描任務。這允許您通過完成拍照或條形碼掃描任務來關閉鬧鐘。",
+            Language.CHINESE_PINYIN to "Yòng yú pāi zhào hé sǎo miáo rèn wù. Zhè yǔn xǔ nín tōng guò wán chéng pāi zhào huò tiáo xíng mǎ sǎo miáo rèn wù lái guān bì nào zhōng。",
+            Language.ARABIC to "مطلوب لالتقاط الصور ومهام المسح. يتيح لك this إكمال المهام القائمة على الصور أو مسح الرموز الشريطية لإيقاف المنبه.",
+            Language.TAGALOG to "Kinakailangan para sa pagkuha ng larawan at mga scanning mission. Nagbibigay-daan ito sa iyo na kumpletuhin ang mga mission na nakabatay sa larawan o barcode-scanning upang patahimikin ang alarm.",
+            Language.THAI to "จำเป็นสำหรับภารกิจถ่ายภาพและสแกน ช่วยให้คุณทำภารกิจถ่ายรูปหรือสแกนบาร์โค้ดเพื่อปิดเสียงเตือนได้",
+            Language.HINDI to "फोटो कैप्चर और स्कैनिंग मिशन के लिए आवश्यक है। यह आपको अलार्म को बंद करने के लिए फोटो-आधारित या बारकोड-स्कैनिंग मिशन को पूरा करने की अनुमति देता है।",
+            Language.CANTONESE to "用於拍照和掃描任務。這允許您通過完成拍照或條形碼掃描任務來關閉鬧鐘。"
         )
 )
 

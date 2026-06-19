@@ -566,6 +566,13 @@ private fun StepPermissions(
             color = SubtitleGray
         )
 
+        Text(
+            text = Localizer.t("Without these permissions, the alarm may not ring reliably, or you might easily bypass the wake-up missions."),
+            fontSize = 11.sp,
+            color = OrangePrimary,
+            fontWeight = FontWeight.Medium
+        )
+
         Spacer(modifier = Modifier.height(8.dp))
 
         // Notification Permission Card
@@ -597,7 +604,7 @@ private fun StepPermissions(
                         color = DarkText
                     )
                     Text(
-                        text = if (notificationGranted) Localizer.t("Access Allowed") else Localizer.t("Required to trigger wake-up notifications"),
+                        text = if (notificationGranted) Localizer.t("Access Allowed") else Localizer.t("Required to trigger wake-up notifications. Without this, the app cannot show background alarm alerts or status bar indicators."),
                         fontSize = 11.sp,
                         color = SubtitleGray
                     )
@@ -653,7 +660,7 @@ private fun StepPermissions(
                         color = DarkText
                     )
                     Text(
-                        text = if (overlayGranted) Localizer.t("Access Allowed") else Localizer.t("Required to display overlays over other apps"),
+                        text = if (overlayGranted) Localizer.t("Access Allowed") else Localizer.t("Required to display overlays over other apps. This ensures the wake-up mission screen pops up immediately, preventing you from using other apps until dismissed."),
                         fontSize = 11.sp,
                         color = SubtitleGray
                     )
@@ -710,7 +717,7 @@ private fun StepPermissions(
                             color = DarkText
                         )
                         Text(
-                            text = if (lockScreenGranted) Localizer.t("Access Allowed") else Localizer.t("Required to display overlays on the lock screen"),
+                            text = if (lockScreenGranted) Localizer.t("Access Allowed") else Localizer.t("Required to display overlays on the lock screen. This ensures the alarm screen wakes up the device and prompts you to solve the mission directly on lock screen."),
                             fontSize = 11.sp,
                             color = SubtitleGray
                         )
@@ -767,7 +774,7 @@ private fun StepPermissions(
                         color = DarkText
                     )
                     Text(
-                        text = if (cameraGranted) Localizer.t("Access Allowed") else Localizer.t("Required for photo capture and scanning missions"),
+                        text = if (cameraGranted) Localizer.t("Access Allowed") else Localizer.t("Required for photo capture and scanning missions. This allows you to complete photo-based or barcode-scanning missions to silence the alarm."),
                         fontSize = 11.sp,
                         color = SubtitleGray
                     )
