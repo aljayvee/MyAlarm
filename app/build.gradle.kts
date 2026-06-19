@@ -14,8 +14,8 @@ android {
         applicationId = "com.application.myalarm"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -28,7 +28,7 @@ android {
         }
         release {
             applicationIdSuffix = ".prod"
-            manifestPlaceholders["appName"] = "Alarm prod"
+            manifestPlaceholders["appName"] = "Alarm"
             buildConfigField("String", "UPDATE_JSON_URL", "\"https://raw.githubusercontent.com/aljayvee/MyAlarm/main/app-update-prod.json\"")
             optimization {
                 enable = false
