@@ -363,7 +363,7 @@ private fun StepWhyUseApp() {
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = Localizer.t("Why SnoozeOff?"),
+            text = Localizer.t("Why Alarm?"),
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
             color = DarkText,
@@ -373,7 +373,7 @@ private fun StepWhyUseApp() {
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = Localizer.t("Are you tired of oversleeping and hitting snooze repeatedly? SnoozeOff is designed to wake you up completely. To silence the alarm, you must complete interactive missions (solving math problems, shaking the phone, taking photos of the sky, or walking a specified step count). Once the alarm triggers, navigation controls are restricted to ensure you don't cheat!"),
+            text = Localizer.t("Are you tired of oversleeping and hitting snooze repeatedly? Alarm is designed to wake you up completely. To silence the alarm, you must complete interactive missions (solving math problems, shaking the phone, taking photos of the sky, or walking a specified step count). Once the alarm triggers, navigation controls are restricted to ensure you don't cheat!"),
             fontSize = 13.sp,
             color = SubtitleGray,
             textAlign = TextAlign.Center,
@@ -428,7 +428,7 @@ private fun StepDeveloperIntro() {
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = Localizer.t("Hi! I am the creator of this alarm application. I developed SnoozeOff to help you break bad sleeping habits, cultivate morning self-discipline, and get out of bed on time with engaging wake-up missions. Thank you for choosing my app to master your mornings!"),
+            text = Localizer.t("Hi! I am the creator of this alarm application. I developed Alarm to help you break bad sleeping habits, cultivate morning self-discipline, and get out of bed on time with engaging wake-up missions. Thank you for choosing my app to master your mornings!"),
             fontSize = 13.sp,
             color = SubtitleGray,
             textAlign = TextAlign.Center,
