@@ -1883,6 +1883,22 @@ object Localizer {
         "Pitch-sweeping alert sound effect" to mapOf(
             Language.CHINESE_SIMPLIFIED to "音调起伏的扫频警报声", Language.CHINESE_TRADITIONAL to "音調起伏的掃頻警報聲", Language.CHINESE_PINYIN to "Yīn diào qǐ fú de sǎo pín jǐng bào shēng",
             Language.ARABIC to "تأثير صوتي لتنبيه مغير طبقة الصوت", Language.TAGALOG to "Tunog ng nagbabagong tono ng alarma", Language.THAI to "เอฟเฟกต์เสียงเตือนแบบกวาดระดับเสียง", Language.HINDI to "पिच-स्वीपिंग अलर्ट ध्वनि प्रभाव", Language.CANTONESE to "音調起伏嘅掃頻警報聲"
+        ),
+        "Mixue" to mapOf(
+            Language.CHINESE_SIMPLIFIED to "蜜雪冰城", Language.CHINESE_TRADITIONAL to "蜜雪冰城", Language.CHINESE_PINYIN to "Mì xuě bīng chéng",
+            Language.ARABIC to "ميكسو", Language.TAGALOG to "Mixue", Language.THAI to "มิกซู", Language.HINDI to "मिक्स्यू", Language.CANTONESE to "蜜雪冰城"
+        ),
+        "Viral theme song of Mixue Ice Cream & Tea" to mapOf(
+            Language.CHINESE_SIMPLIFIED to "蜜雪冰城主题曲", Language.CHINESE_TRADITIONAL to "蜜雪冰城主題曲", Language.CHINESE_PINYIN to "Mì xuě bīng chéng zhǔ tí qǔ",
+            Language.ARABIC to "أغنية ميكسو الشهيرة", Language.TAGALOG to "Viral na theme song ng Mixue", Language.THAI to "เพลงธีมไวรัลของมิกซู", Language.HINDI to "मिक्स्यू का वायरल थीम सॉन्ग", Language.CANTONESE to "蜜雪冰城主題曲"
+        ),
+        "Why Your Room" to mapOf(
+            Language.CHINESE_SIMPLIFIED to "为什么你的房", Language.CHINESE_TRADITIONAL to "为什么你的房", Language.CHINESE_PINYIN to "Wèi shén me nǐ de fáng",
+            Language.ARABIC to "لماذا غرفتك", Language.TAGALOG to "Why Your Room", Language.THAI to "ทำไมห้องของคุณ", Language.HINDI to "तुम्हारा कमरा क्यों", Language.CANTONESE to "为什么你的房"
+        ),
+        "Lively Chinese pop rhythm tune" to mapOf(
+            Language.CHINESE_SIMPLIFIED to "欢快动听的中文流行节奏歌曲", Language.CHINESE_TRADITIONAL to "歡快動聽的中文流行節奏歌曲", Language.CHINESE_PINYIN to "Huān kuài dòng tīng de zhōng wén liú xíng jié zòu gē qǔ",
+            Language.ARABIC to "لحن البوب الصيني المبهج", Language.TAGALOG to "Masiglang himig ng musikang pop ng Tsina", Language.THAI to "ทำนองเพลงป๊อปจีนที่ร่าเริงและมีชีวิตชีวา", Language.HINDI to "जीवंत चीनी पॉप लय धुन", Language.CANTONESE to "歡快動聽的中文流行節奏歌曲"
         )
 )
 

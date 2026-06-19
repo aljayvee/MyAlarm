@@ -2,6 +2,7 @@ package com.application.myalarm.ui.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Alarm
@@ -47,6 +48,53 @@ fun AppNavigation() {
     val userPrefs = app.userPreferences
     val onboardingCompleted by userPrefs.onboardingCompleted.collectAsState(initial = null)
     val selectedLanguage by userPrefs.selectedLanguage.collectAsState(initial = "en")
+
+    val lastVersionCode by userPrefs.lastVersionCode.collectAsState(initial = 0)
+    var showUpdateSuccessDialog by remember { mutableStateOf(false) }
+    var updatedVersionName by remember { mutableStateOf("") }
+
+    LaunchedEffect(lastVersionCode, onboardingCompleted) {
+        if (onboardingCompleted == true) {
+            val currentCode = com.application.myalarm.BuildConfig.VERSION_CODE
+            if (lastVersionCode > 0 && currentCode > lastVersionCode) {
+                updatedVersionName = com.application.myalarm.BuildConfig.VERSION_NAME
+                showUpdateSuccessDialog = true
+            }
+            if (currentCode != lastVersionCode) {
+                userPrefs.updateLastVersionCode(currentCode)
+            }
+        }
+    }
+
+    if (showUpdateSuccessDialog) {
+        AlertDialog(
+            onDismissRequest = { showUpdateSuccessDialog = false },
+            title = {
+                Text(
+                    text = "Update Successful",
+                    fontWeight = FontWeight.Bold,
+                    color = DarkText
+                )
+            },
+            text = {
+                Text(
+                    text = "The app has been successfully updated to version $updatedVersionName!",
+                    color = DarkText,
+                    fontSize = 14.sp
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = { showUpdateSuccessDialog = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = OrangePrimary)
+                ) {
+                    Text("OK", color = Color.White)
+                }
+            },
+            containerColor = Color.White,
+            shape = androidx.compose.foundation.shape.RoundedCornerShape(20.dp)
+        )
+    }
 
     var updateInfo by remember { mutableStateOf<com.application.myalarm.update.AppUpdateInfo?>(null) }
 
@@ -203,9 +251,13 @@ fun AppUpdateDialog(
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
+    var isDownloading by remember { mutableStateOf(false) }
+    var downloadProgress by remember { mutableStateOf(0) }
+    var downloadError by remember { mutableStateOf<String?>(null) }
+
     AlertDialog(
         onDismissRequest = {
-            if (!updateInfo.forceUpdate) {
+            if (!updateInfo.forceUpdate && !isDownloading) {
                 onDismiss()
             }
         },
@@ -238,27 +290,76 @@ fun AppUpdateDialog(
                         fontSize = 12.sp
                     )
                 }
+                if (isDownloading) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "Downloading... $downloadProgress%",
+                        fontWeight = FontWeight.SemiBold,
+                        color = OrangePrimary,
+                        fontSize = 12.sp
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    LinearProgressIndicator(
+                        progress = { downloadProgress / 100f },
+                        modifier = Modifier.fillMaxWidth(),
+                        color = OrangePrimary,
+                        trackColor = OrangeLight
+                    )
+                }
+                if (downloadError != null) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = downloadError!!,
+                        color = MaterialTheme.colorScheme.error,
+                        fontSize = 12.sp
+                    )
+                }
             }
         },
         confirmButton = {
             Button(
                 onClick = {
-                    try {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(updateInfo.apkUrl))
-                        context.startActivity(intent)
-                    } catch (e: Exception) {
-                        // Fallback
-                    }
+                    isDownloading = true
+                    downloadError = null
+                    com.application.myalarm.update.AppUpdateChecker.downloadApk(
+                        context = context,
+                        url = updateInfo.apkUrl,
+                        onProgress = { progress ->
+                            downloadProgress = progress
+                        },
+                        onComplete = { file ->
+                            isDownloading = false
+                            if (file != null && file.exists()) {
+                                try {
+                                    val apkUri = androidx.core.content.FileProvider.getUriForFile(
+                                        context,
+                                        "${context.packageName}.fileprovider",
+                                        file
+                                    )
+                                    val intent = Intent(Intent.ACTION_VIEW).apply {
+                                        setDataAndType(apkUri, "application/vnd.android.package-archive")
+                                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                                    }
+                                    context.startActivity(intent)
+                                } catch (e: Exception) {
+                                    downloadError = "Installation failed: ${e.message}"
+                                }
+                            } else {
+                                downloadError = "Download failed. Please try again."
+                            }
+                        }
+                    )
                 },
+                enabled = !isDownloading,
                 colors = ButtonDefaults.buttonColors(containerColor = OrangePrimary)
             ) {
-                Text("Update", color = Color.White)
+                Text(if (isDownloading) "Downloading..." else "Update", color = Color.White)
             }
         },
         dismissButton = {
-            if (!updateInfo.forceUpdate) {
+            if (!updateInfo.forceUpdate && !isDownloading) {
                 TextButton(onClick = onDismiss) {
-                    Text("Later", color = SubtitleGray)
+                    Text("Back", color = SubtitleGray)
                 }
             }
         },

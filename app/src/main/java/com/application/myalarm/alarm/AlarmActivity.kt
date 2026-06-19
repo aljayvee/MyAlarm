@@ -27,6 +27,7 @@ class AlarmActivity : ComponentActivity() {
 
     companion object {
         var isRequestingPermission = false
+        var isActivityVisible = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -157,6 +158,11 @@ class AlarmActivity : ComponentActivity() {
         // Prevent dismissal via back button – user must complete the mission
     }
 
+    override fun onStart() {
+        super.onStart()
+        isActivityVisible = true
+    }
+
     override fun onResume() {
         super.onResume()
         isRequestingPermission = false
@@ -178,9 +184,15 @@ class AlarmActivity : ComponentActivity() {
 
     override fun onStop() {
         super.onStop()
+        isActivityVisible = false
         if (shouldRelaunch()) {
             relaunchActivity()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        isActivityVisible = false
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

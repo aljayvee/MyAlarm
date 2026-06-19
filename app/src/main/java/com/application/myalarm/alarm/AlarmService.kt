@@ -5,8 +5,10 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -28,6 +30,8 @@ class AlarmService : Service() {
 
     private var mediaPlayer: MediaPlayer? = null
     private var vibrator: Vibrator? = null
+    private var userPresentReceiver: BroadcastReceiver? = null
+    private var pendingAlarmIntent: Intent? = null
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -51,6 +55,10 @@ class AlarmService : Service() {
         startAlarmSound(soundName, soundVolume, customSoundUri)
         startVibration()
 
+        if (intent != null) {
+            registerUserPresentReceiver(intent)
+        }
+
         return START_STICKY
     }
 
@@ -58,6 +66,7 @@ class AlarmService : Service() {
         super.onDestroy()
         stopAlarmSound()
         stopVibration()
+        unregisterUserPresentReceiver()
     }
 
     private fun createNotificationChannel() {
@@ -166,6 +175,8 @@ class AlarmService : Service() {
             "Alien Beam" -> "alien_beam"
             "Electric Ring" -> "electric_ring_long"
             "High Low Sweep" -> "high_to_low_sweep"
+            "Mixue" -> "mixue"
+            "Why Your Room" -> "weishime_ni_de_fang"
             else -> "basic_alarm"
         }
         val resId = context.resources.getIdentifier(resName, "raw", packageName)
@@ -227,5 +238,50 @@ class AlarmService : Service() {
             else -> hour
         }
         return "%d:%02d %s".format(displayHour, minute, amPm)
+    }
+
+    private fun launchAlarmActivity(context: Context, launchIntent: Intent) {
+        val activityIntent = Intent(context, AlarmActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                    Intent.FLAG_ACTIVITY_SINGLE_TOP
+            putExtras(launchIntent)
+        }
+        try {
+            context.startActivity(activityIntent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun registerUserPresentReceiver(launchIntent: Intent) {
+        pendingAlarmIntent = launchIntent
+        if (userPresentReceiver == null) {
+            userPresentReceiver = object : BroadcastReceiver() {
+                override fun onReceive(context: Context, intent: Intent) {
+                    if (intent.action == Intent.ACTION_USER_PRESENT) {
+                        pendingAlarmIntent?.let { alarmIntent ->
+                            if (!AlarmActivity.isActivityVisible) {
+                                launchAlarmActivity(context, alarmIntent)
+                            }
+                        }
+                    }
+                }
+            }
+            val filter = IntentFilter(Intent.ACTION_USER_PRESENT)
+            registerReceiver(userPresentReceiver, filter)
+        }
+    }
+
+    private fun unregisterUserPresentReceiver() {
+        userPresentReceiver?.let {
+            try {
+                unregisterReceiver(it)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            userPresentReceiver = null
+        }
+        pendingAlarmIntent = null
     }
 }
