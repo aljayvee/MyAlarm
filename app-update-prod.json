@@ -1,7 +1,7 @@
 {
-  "latestVersionCode": 7,
-  "latestVersionName": "1.1.7",
-  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v1.1.7-prod/alarm-prod.apk",
+  "latestVersionCode": 8,
+  "latestVersionName": "1.1.8",
+  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v1.1.8-prod/alarm-prod.apk",
   "forceUpdate": true,
-  "releaseNotes": "Fixed an issue in Infinix users where the app crashes. \nImproved Stability of the system."
+  "releaseNotes": "Optimized the translation of the app from english to tagalog only. Improved Stability.\n\nTake Note: Installing this app means you agree to my own terms and the used of this app.\n\nTHIS APP IS SAFE and SECURE TO USE!"
 }
