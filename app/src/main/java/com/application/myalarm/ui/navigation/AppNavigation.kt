@@ -24,6 +24,7 @@ import com.application.myalarm.ui.alarms.SoundPickerScreen
 import com.application.myalarm.ui.home.HomeScreen
 import com.application.myalarm.ui.insights.InsightsScreen
 import com.application.myalarm.ui.settings.SettingsScreen
+import com.application.myalarm.ui.settings.LegalScreen
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.background
@@ -217,7 +218,13 @@ fun AppNavigation() {
                     InsightsScreen()
                 }
                 currentRoute == "settings" -> {
-                    SettingsScreen()
+                    SettingsScreen(onNavigate = navigate)
+                }
+                currentRoute == "terms_of_service" -> {
+                    LegalScreen(type = "terms", onBack = navigateBack)
+                }
+                currentRoute == "privacy_policy" -> {
+                    LegalScreen(type = "privacy", onBack = navigateBack)
                 }
                 currentRoute.startsWith("alarm_edit/") -> {
                     val alarmId = currentRoute.substringAfter("alarm_edit/").toLongOrNull() ?: -1L

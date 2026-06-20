@@ -42,6 +42,7 @@ private val SuccessGreen = Color(0xFF4CAF50)
 
 @Composable
 fun SettingsScreen(
+    onNavigate: (String) -> Unit,
     viewModel: SettingsViewModel = viewModel()
 ) {
     val context = LocalContext.current
@@ -289,7 +290,7 @@ fun SettingsScreen(
         }
 
         item {
-            AboutCard()
+            AboutCard(onNavigate = onNavigate)
         }
 
         item {
@@ -490,7 +491,7 @@ private fun OverlayPermissionCard(
 }
 
 @Composable
-private fun AboutCard() {
+private fun AboutCard(onNavigate: (String) -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(20.dp),
@@ -554,6 +555,74 @@ private fun AboutCard() {
                     text = "Aljayvee Versola",
                     fontSize = 15.sp,
                     color = SubtitleGray
+                )
+            }
+
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                color = Color(0xFFF0F0F0)
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onNavigate("terms_of_service") }
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Description,
+                    contentDescription = "Terms of Service",
+                    tint = SubtitleGray,
+                    modifier = Modifier.size(22.dp)
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(
+                    text = Localizer.t("Terms of Service"),
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = DarkText,
+                    modifier = Modifier.weight(1f)
+                )
+                Icon(
+                    imageVector = Icons.Default.ChevronRight,
+                    contentDescription = null,
+                    tint = SubtitleGray,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                color = Color(0xFFF0F0F0)
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onNavigate("privacy_policy") }
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.PrivacyTip,
+                    contentDescription = "Privacy Policy",
+                    tint = SubtitleGray,
+                    modifier = Modifier.size(22.dp)
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(
+                    text = Localizer.t("Privacy Policy"),
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = DarkText,
+                    modifier = Modifier.weight(1f)
+                )
+                Icon(
+                    imageVector = Icons.Default.ChevronRight,
+                    contentDescription = null,
+                    tint = SubtitleGray,
+                    modifier = Modifier.size(20.dp)
                 )
             }
         }

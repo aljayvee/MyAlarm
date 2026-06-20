@@ -26,7 +26,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "設置",
             Language.CHINESE_PINYIN to "Shè zhì",
             Language.ARABIC to "الإعدادات",
-            Language.TAGALOG to "Mga Setting",
+            Language.TAGALOG to "Setting",
             Language.THAI to "การตั้งค่า",
             Language.HINDI to "सेटिंग्स",
             Language.CANTONESE to "設定"
@@ -46,7 +46,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "鬧鐘",
             Language.CHINESE_PINYIN to "Nào zhōng",
             Language.ARABIC to "المنبهات",
-            Language.TAGALOG to "Mga Alarma",
+            Language.TAGALOG to "Mga Alarms",
             Language.THAI to "นาฬิกาปลุก",
             Language.HINDI to "अलार्म",
             Language.CANTONESE to "鬧鐘"
@@ -56,7 +56,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "分析",
             Language.CHINESE_PINYIN to "Fēn xī",
             Language.ARABIC to "الإحصائيات",
-            Language.TAGALOG to "Mga Insight",
+            Language.TAGALOG to "Insights",
             Language.THAI to "ข้อมูลเชิงลึก",
             Language.HINDI to "अंतरदृष्टि",
             Language.CANTONESE to "分析"
@@ -66,7 +66,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "版本",
             Language.CHINESE_PINYIN to "Bǎn běn",
             Language.ARABIC to "الإصدار",
-            Language.TAGALOG to "Bersyon",
+            Language.TAGALOG to "Version",
             Language.THAI to "เวอร์ชัน",
             Language.HINDI to "संस्करण",
             Language.CANTONESE to "版本"
@@ -86,7 +86,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "語言",
             Language.CHINESE_PINYIN to "Yǔ yán",
             Language.ARABIC to "اللغة",
-            Language.TAGALOG to "Wika",
+            Language.TAGALOG to "Lengguahe",
             Language.THAI to "ภาษา",
             Language.HINDI to "भाषा",
             Language.CANTONESE to "語言"
@@ -106,7 +106,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "權限列表",
             Language.CHINESE_PINYIN to "Quán xiàn liè biǎo",
             Language.ARABIC to "الأذونات",
-            Language.TAGALOG to "MGA PAHINTULOT",
+            Language.TAGALOG to "MGA PERMISSION",
             Language.THAI to "สิทธิ์การเข้าถึง",
             Language.HINDI to "अनुमतियाँ",
             Language.CANTONESE to "權限列表"
@@ -116,10 +116,30 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "關於",
             Language.CHINESE_PINYIN to "Guān yú",
             Language.ARABIC to "حول",
-            Language.TAGALOG to "TUNGKOL",
+            Language.TAGALOG to "ABOUT",
             Language.THAI to "เกี่ยวกับ",
             Language.HINDI to "के बारे में",
             Language.CANTONESE to "關於"
+        ),
+        "Terms of Service" to mapOf(
+            Language.CHINESE_SIMPLIFIED to "服务条款",
+            Language.CHINESE_TRADITIONAL to "服務條款",
+            Language.CHINESE_PINYIN to "Fúwù tiáokuǎn",
+            Language.ARABIC to "شروط الخدمة",
+            Language.TAGALOG to "Mga Tuntunin ng Serbisyo",
+            Language.THAI to "ข้อกำหนดการให้บริการ",
+            Language.HINDI to "सेवा की शर्तें",
+            Language.CANTONESE to "服務條款"
+        ),
+        "Privacy Policy" to mapOf(
+            Language.CHINESE_SIMPLIFIED to "隐私政策",
+            Language.CHINESE_TRADITIONAL to "隱私政策",
+            Language.CHINESE_PINYIN to "Yǐnsī zhèngcè",
+            Language.ARABIC to "سياسة الخصوصية",
+            Language.TAGALOG to "Patakaran sa Privacy",
+            Language.THAI to "นโยบายความเป็นส่วนตัว",
+            Language.HINDI to "गोपनीयता नीति",
+            Language.CANTONESE to "隱私政策"
         ),
         "streak" to mapOf(
             Language.CHINESE_SIMPLIFIED to "连续天数",
@@ -136,7 +156,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "下次鬧鐘",
             Language.CHINESE_PINYIN to "Xià cì nào zhōng",
             Language.ARABIC to "المنبه القادم",
-            Language.TAGALOG to "Susunod na Alarma",
+            Language.TAGALOG to "Susunod na Alarm",
             Language.THAI to "ปลุกครั้งถัดไป",
             Language.HINDI to "अगला अलार्म",
             Language.CANTONESE to "下次鬧鐘"
@@ -146,7 +166,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "響鈴剩餘時間",
             Language.CHINESE_PINYIN to "Xiǎng líng shèng yú shí jiān",
             Language.ARABIC to "يرن في",
-            Language.TAGALOG to "Tútúnóg sa loób ng",
+            Language.TAGALOG to "Tutunog sa loób ng",
             Language.THAI to "จะดังขึ้นในอีก",
             Language.HINDI to "बचेगा",
             Language.CANTONESE to "響鈴剩餘時間"
@@ -156,7 +176,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "今日起床",
             Language.CHINESE_PINYIN to "Jīn rì qǐ chuáng",
             Language.ARABIC to "الاستيقاظ اليوم",
-            Language.TAGALOG to "Gising Ngayong Araw",
+            Language.TAGALOG to "Mga Gising Mo Ngayon",
             Language.THAI to "การตื่นนอนวันนี้",
             Language.HINDI to "आज की सुबह",
             Language.CANTONESE to "今日起床"
@@ -166,7 +186,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "歷史",
             Language.CHINESE_PINYIN to "Lì shǐ",
             Language.ARABIC to "السجل",
-            Language.TAGALOG to "Kasaysayan",
+            Language.TAGALOG to "History",
             Language.THAI to "ประวัติ",
             Language.HINDI to "इतिहास",
             Language.CANTONESE to "歷史"
@@ -176,7 +196,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "新鬧鐘",
             Language.CHINESE_PINYIN to "Xīn nào zhōng",
             Language.ARABIC to "منبه جديد",
-            Language.TAGALOG to "Bagong Alarma",
+            Language.TAGALOG to "Gumawa ng Bagong Alarm",
             Language.THAI to "เพิ่มนาฬิกาปลุก",
             Language.HINDI to "नया अलार्म",
             Language.CANTONESE to "新鬧鐘"
@@ -186,7 +206,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "編輯鬧鐘",
             Language.CHINESE_PINYIN to "Biān jí nào zhōng",
             Language.ARABIC to "تعديل المنبه",
-            Language.TAGALOG to "I-edit ang Alarma",
+            Language.TAGALOG to "I-edit ang Alarm",
             Language.THAI to "แก้ไขนาฬิกาปลุก",
             Language.HINDI to "अलार्म संपादित करें",
             Language.CANTONESE to "編輯鬧鐘"
@@ -226,7 +246,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "解鎖任務",
             Language.CHINESE_PINYIN to "Jiě suǒ rèn wu",
             Language.ARABIC to "المهمة",
-            Language.TAGALOG to "MISYON",
+            Language.TAGALOG to "MISSION",
             Language.THAI to "ภารกิจ",
             Language.HINDI to "मिशन",
             Language.CANTONESE to "解鎖任務"
@@ -246,7 +266,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "備用鬧鐘",
             Language.CHINESE_PINYIN to "Bèi yòng nào zhōng",
             Language.ARABIC to "المنبه الاحتياطي",
-            Language.TAGALOG to "BACKUP ALARMA",
+            Language.TAGALOG to "BACKUP ALARM",
             Language.THAI to "นาฬิกาปลุกสำรอง",
             Language.HINDI to "बैकअप अलार्म",
             Language.CANTONESE to "備用鬧鐘"
@@ -266,7 +286,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "多少分鐘後再響",
             Language.CHINESE_PINYIN to "Duō shǎo fēn zhōng hòu zài xiǎng",
             Language.ARABIC to "رنين مجدد بعد (دقائق)",
-            Language.TAGALOG to "Tútúnóg ulít pagkatapós ng (min)",
+            Language.TAGALOG to "Tutunog ulít pagkatapós ng (min)",
             Language.THAI to "ดังขึ้นอีกครั้งหลังจาก (นาที)",
             Language.HINDI to "फिर बजने का समय (मिनट)",
             Language.CANTONESE to "多少分鐘後再響"
@@ -318,7 +338,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "準備就緒！",
             Language.CHINESE_PINYIN to "Zhǔn bèi jiù xù!",
             Language.ARABIC to "أنت جاهز تمامًا!",
-            Language.TAGALOG to "Handa Ka Na!",
+            Language.TAGALOG to "Ang lahat ay naka-set na!",
             Language.THAI to "คุณพร้อมแล้ว!",
             Language.HINDI to "आप पूरी तरह तैयार हैं!",
             Language.CANTONESE to "準備就緒！"
@@ -328,7 +348,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "顯示在其他應用上層",
             Language.CHINESE_PINYIN to "Xiǎn shì zài qí tā ying yòng shàng céng",
             Language.ARABIC to "الظهور فوق التطبيقات الأخرى",
-            Language.TAGALOG to "I-display sa ibabaw ng ibang app",
+            Language.TAGALOG to "I-display sa device ang ibang app",
             Language.THAI to "แสดงทับแอปอื่น",
             Language.HINDI to "अन्य ऐप्स के ऊपर प्रदर्शित करें",
             Language.CANTONESE to "顯示在其他應用上層"
@@ -348,7 +368,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "懸浮窗權限",
             Language.CHINESE_PINYIN to "Xuán fù chuāng quán xiàn",
             Language.ARABIC to "الظهور فوق التطبيقات الأخرى",
-            Language.TAGALOG to "I-display sa ibabaw ng ibang apps",
+            Language.TAGALOG to "I-display sa device ang ibang apps",
             Language.THAI to "แสดงทับแอปอื่น",
             Language.HINDI to "अन्य ऐप्स के ऊपर प्रदर्शित करें",
             Language.CANTONESE to "懸浮窗權限"
@@ -358,7 +378,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "已允許 — 鬧鐘可以在鎖屏顯示橫幅",
             Language.CHINESE_PINYIN to "Yǐ yǔn xǔ — nào zhōng kě yǐ zài suǒ píng xiǎn shì héng fú",
             Language.ARABIC to "مسموح — يمكن للمنبهات إظهار لافتات على شاشة القفل",
-            Language.TAGALOG to "Pinapayagan — maaaring mag-post ang mga alarma ng mga banner sa lock-screen",
+            Language.TAGALOG to "Pinapayagan — maaaring mag-post ang mga alarm ng mga banner sa lock-screen",
             Language.THAI to "อนุญาตแล้ว — นาฬิกาปลุกสามารถแสดงแบนเนอร์บนหน้าจอล็อกได้",
             Language.HINDI to "अनुमति है — अलार्म लॉक-स्क्रीन बैनर पोस्ट कर सकते हैं",
             Language.CANTONESE to "已允許 — 鬧鐘可以在鎖屏顯示橫幅"
@@ -368,7 +388,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "已禁用 — 鬧鐘無法發送通知或顯示響鈴界面",
             Language.CHINESE_PINYIN to "Yǐ jìn yòng — nào zhōng wú fǎ fā sòng tōng zhī huò xiǎn shì xiǎng líng jiè miàn",
             Language.ARABIC to "محظور — لا يمكن للمنبهات التنبيه أو إظهار واجهة الرنين",
-            Language.TAGALOG to "Blocked — hindi maabisuhan o maipakita ng mga alarma ang UI ng pagtunog",
+            Language.TAGALOG to "Blocked — hindi maabisuhan o maipakita ng mga alarm ang UI ng pagtunog",
             Language.THAI to "ถูกบล็อก — นาฬิกาปลุกไม่สามารถแจ้งเตือนหรือแสดงหน้าจอปลุกได้",
             Language.HINDI to "अवरुद्ध — अलार्म सूचित नहीं कर सकते या बजने वाला UI नहीं दिखा सकते",
             Language.CANTONESE to "已禁用 — 鬧鐘無法發送通知或顯示響鈴界面"
@@ -388,7 +408,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "已允許 — 鬧鐘將立即覆蓋屏幕",
             Language.CHINESE_PINYIN to "Yǐ yǔn xǔ — nào zhōng jiāng lì jí fù gài píng mù",
             Language.ARABIC to "مسموح — ستظهر المنبهات فوق الشاشة فورًا",
-            Language.TAGALOG to "Pinapayagan — mag-o-overlay agad ang mga alarma sa screen",
+            Language.TAGALOG to "Pinapayagan — mag-o-overlay agad ang mga alarm sa screen",
             Language.THAI to "อนุญาตแล้ว — นาฬิกาปลุกจะแสดงทับหน้าจอทันที",
             Language.HINDI to "अनुमति है — अलार्म तुरंत स्क्रीन पर आ जाएंगे",
             Language.CANTONESE to "已允許 — 鬧鐘將立即覆蓋屏幕"
@@ -398,7 +418,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "已禁用 — 如果設備正在使用，鬧鐘將無法顯示全屏",
             Language.CHINESE_PINYIN to "Yǐ jìn yòng — rú guǒ shè bèi zhèng zài shǐ yòng, nào zhōng wú fǎ xiǎn shì quán píng",
             Language.ARABIC to "محظور — لا يمكن للمنبهات الظهور بملء الشاشة إذا كان الجهاز قيد الاستخدام",
-            Language.TAGALOG to "Blocked — hindi maipapakita ng mga alarma ang fullscreen kung ginagamit ang device",
+            Language.TAGALOG to "Blocked — hindi maipapakita ng mga alarm ang fullscreen kung ginagamit ang device",
             Language.THAI to "ถูกบล็อก — นาฬิกาปลุกไม่สามารถแสดงผลแบบเต็มจอได้หากกำลังใช้งานอุปกรณ์อยู่",
             Language.HINDI to "अवरुद्ध — यदि डिवाइस उपयोग में है तो अलार्म फुलस्क्रीन नहीं दिखा सकते",
             Language.CANTONESE to "已禁用 — 如果設備正在使用，鬧鐘將無法顯示全屏"
@@ -408,7 +428,7 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "此權限允許鬧鐘在您使用其他應用時覆蓋並顯示喚醒屏幕。這可以防止您忽略它。",
             Language.CHINESE_PINYIN to "Cǐ quán xiàn yǔn xǔ nào zhōng zài nín shǐ yòng qí tā yìng yòng shí fù gài bìng xiǎn shì huàn xǐng píng mù...",
             Language.ARABIC to "يسمح هذا الإذن للمنبه بالظهور فوق التطبيقات وعرض شاشة الاستيقاظ حتى لو كنت تستخدم تطبيقات أخرى. هذا يمنعك من تجاهله.",
-            Language.TAGALOG to "Pinapayagan ng permission na ito ang alarma na mag-overlay at ipakita ang wakeup screen kahit gumagamit ka ng ibang apps. Hahadlangan ka nitong balewalain ito.",
+            Language.TAGALOG to "Pinapayagan ng permission na ito ang alarm na mag-overlay at ipakita ang wakeup screen kahit gumagamit ka ng ibang apps. Hahadlangan ka nitong balewalain ito.",
             Language.THAI to "สิทธิ์นี้อนุญาตให้นาฬิกาปลุกแสดงทับหน้าจอและแสดงหน้าจอปลุกได้แม้ว่าคุณจะใช้งานแอปอื่นอยู่ ซึ่งจะช่วยป้องกันไม่ให้คุณเพิกเฉยต่อการปลุก",
             Language.HINDI to "यह अनुमति अलार्म को अन्य ऐप्स का उपयोग करने पर भी ऊपर आने और वेकअप स्क्रीन दिखाने की अनुमति देती है। यह आपको इसे अनदेखा करने से रोकता है।",
             Language.CANTONESE to "此權限允許鬧鐘在您使用其他應用時覆蓋並顯示喚醒屏幕。這可以防止您忽略它。"
@@ -455,7 +475,7 @@ object Localizer {
             Language.CHINESE_SIMPLIFIED to "管理",
             Language.CHINESE_TRADITIONAL to "管理",
             Language.CHINESE_PINYIN to "Guǎn lǐ",
-            Language.TAGALOG to "Pamahalaan",
+            Language.TAGALOG to "Manage",
             Language.CANTONESE to "管理"
         ),
         "Manage custom settings for OEM devices (Show on Lock screen, Autostart, Battery optimizations)" to mapOf(
@@ -570,30 +590,30 @@ object Localizer {
             Language.CHINESE_TRADITIONAL to "最近的任務",
             Language.CHINESE_PINYIN to "Zuì jìn de rèn wu",
             Language.ARABIC to "المهام الأخيرة",
-            Language.TAGALOG to "Mga kamakailang misyon",
+            Language.TAGALOG to "Mga nakaraang misyon",
             Language.THAI to "ภารกิจล่าสุด",
             Language.HINDI to "हाल के मिशन",
             Language.CANTONESE to "最近的任務"
         ),
-        "Why SnoozeOff?" to mapOf(
-            Language.CHINESE_SIMPLIFIED to "为什么选择 SnoozeOff？",
-            Language.CHINESE_TRADITIONAL to "為什麼選擇 SnoozeOff？",
-            Language.CHINESE_PINYIN to "Wèi shén me xuǎn zé SnoozeOff?",
-            Language.ARABIC to "لماذا SnoozeOff؟",
-            Language.TAGALOG to "Bakit SnoozeOff?",
-            Language.THAI to "ทำไมต้องใช้ SnoozeOff?",
+        "Why Alarm?" to mapOf(
+            Language.CHINESE_SIMPLIFIED to "为什么选择 Alarm？",
+            Language.CHINESE_TRADITIONAL to "為什麼選擇 Alarm？",
+            Language.CHINESE_PINYIN to "Wèi shén me xuǎn zé Alarm?",
+            Language.ARABIC to "لماذا Alarm؟",
+            Language.TAGALOG to "Bakit piliin ang Alarm?",
+            Language.THAI to "ทำไมต้องใช้ Alarm?",
             Language.HINDI to "SnoozeOff क्यों?",
-            Language.CANTONESE to "為什麼選擇 SnoozeOff？"
+            Language.CANTONESE to "為什麼選擇 Alarm？"
         ),
-        "Are you tired of oversleeping and hitting snooze repeatedly? SnoozeOff is designed to wake you up completely. To silence the alarm, you must complete interactive missions (solving math problems, shaking the phone, taking photos of the sky, or walking a specified step count). Once the alarm triggers, navigation controls are restricted to ensure you don't cheat!" to mapOf(
-            Language.CHINESE_SIMPLIFIED to "您是否厌倦了睡过头并反复按贪睡键？SnoozeOff 旨在彻底唤醒您。要关闭闹钟，您必须完成互动任务（解决数学题、摇晃手机、拍摄天空照片或行走指定步数）。一旦闹钟触发，导航控制将被限制以确保您不会作弊！",
-            Language.CHINESE_TRADITIONAL to "您是否厭倦了睡過頭並反覆按貪睡鍵？SnoozeOff 旨在徹底喚醒您。要關閉鬧鐘，您必須完成互動任務（解決數學題、搖晃手機、拍攝天空照片或行走指定步數）。一旦鬧鐘觸發，導航控制將被限制以確保您不會作弊！",
+        "Are you tired of oversleeping and hitting snooze repeatedly? Alarm is designed to wake you up completely. To silence the alarm, you must complete interactive missions (solving math problems, shaking the phone, taking photos of the sky, or walking a specified step count). Once the alarm triggers, navigation controls are restricted to ensure you don't cheat!" to mapOf(
+            Language.CHINESE_SIMPLIFIED to "您是否厌倦了睡过头并反复按贪睡键？Alarm 旨在彻底唤醒您。要关闭闹钟，您必须完成互动任务（解决数学题、摇晃手机、拍摄天空照片或行走指定步数）。一旦闹钟触发，导航控制将被限制以确保您不会作弊！",
+            Language.CHINESE_TRADITIONAL to "您是否厭倦了睡過頭並反覆按貪睡鍵？Alarm 旨在徹底喚醒您。要關閉鬧鐘，您必須完成互動任務（解決數學題、搖晃手機、拍攝天空照片或行走指定步數）。一旦鬧鐘觸發，導航控制將被限制以確保您不會作弊！",
             Language.CHINESE_PINYIN to "Nín shì fǒu yàn juàn le shuì guò tóu...",
             Language.ARABIC to "هل تعبت من النوم الزائد والضغط على زر الغفوة مرارًا؟ تم تصميم SnoozeOff لإيقاظك تمامًا. لإسكات المنبه، يجب عليك إكمال مهام تفاعلية (حل مسائل رياضية، أو هز الهاتف، أو التقاط صورة للسماء، أو مشي عدد خطوات محدد). بمجرد رنين المنبه، سيتم تقييد عناصر التحكم لمنع الغش!",
-            Language.TAGALOG to "Sawa ka na ba sa labis na pagtulog at paulit-ulit na pag-snooze? Ang SnoozeOff ay dinisenyo upang gisingin ka nang lubusan. Upang patayin ang alarma, kailangan mong kumpletuhin ang mga interactive na misyon (paglutas ng mga problema sa math, pag-shake ng telepono, pagkuha ng larawan ng langit, o paglalakad ng nakatakdang bilang ng hakbang). Kapag tumunog na ang alarma, hahadlangan ang mga navigation controls para hindi ka makapandaya!",
-            Language.THAI to "คุณเบื่อกับการนอนตื่นสายและกดปุ่มเลื่อนปลุกซ้ำๆ หรือไม่? SnoozeOff ออกแบบมาเพื่อปลุกคุณอย่างสมบูรณ์แบบ ในการปิดนาฬิกาปลุก คุณต้องทำภารกิจแบบโต้ตอบให้สำเร็จ (แก้โจทย์คณิตศาสตร์, เขย่าโทรศัพท์, ถ่ายภาพท้องฟ้า หรือเดินตามจำนวนก้าวที่กำหนด) เมื่อนาฬิกาปลุกดัง ปุ่มควบคุมการนำทางจะถูกจำกัดเพื่อให้แน่ใจว่าคุณจะไม่โกง!",
-            Language.HINDI to "क्या आप सो जाने और बार-बार स्नूज़ दबाने से तंग आ चुके हैं? SnoozeOff आपको पूरी तरह से जगाने के लिए बनाया गया है। अलार्म को बंद करने के लिए, आपको इंटरैक्टिव मिशन (गणित की समस्याओं को हल करना, फोन हिलाना, आकाश की फोटो लेना, या एक निर्दिष्ट कदम चलना) पूरे करने होंगे। अलार्म बजने के बाद नेविगेशन को प्रतिबंधित कर दिया जाता है ताकि आप धोखा न दे सकें!",
-            Language.CANTONESE to "您是否厭倦了睡過頭並反覆按貪睡鍵？SnoozeOff 旨在徹底喚醒您。要關閉鬧鐘，您必須完成互動任務（解決數學題、搖晃手機、拍攝天空照片或行走指定步数）。一旦鬧鐘觸發，導航控制將被限制以確保您不會作弊！"
+            Language.TAGALOG to "Sawa ka na ba sa labis na pagtulog at paulit-ulit na pag-snooze? Ang Alarm ay dinisenyo upang gisingin ka nang lubusan. Upang patayin ang alarma, kailangan mong kumpletuhin ang mga interactive na misyon (paglutas ng mga problema sa math, pag-shake ng telepono, pagkuha ng larawan ng langit, o paglalakad ng nakatakdang bilang ng hakbang). Kapag tumunog na ang alarma, hahadlangan ang mga navigation controls para hindi ka makapandaya!",
+            Language.THAI to "คุณเบื่อกับการนอนตื่นสายและกดปุ่มเลื่อนปลุกซ้ำๆ หรือไม่? Alarm ออกแบบมาเพื่อปลุกคุณอย่างสมบูรณ์แบบ ในการปิดนาฬิกาปลุก คุณต้องทำภารกิจแบบโต้ตอบให้สำเร็จ (แก้โจทย์คณิตศาสตร์, เขย่าโทรศัพท์, ถ่ายภาพท้องฟ้า หรือเดินตามจำนวนก้าวที่กำหนด) เมื่อนาฬิกาปลุกดัง ปุ่มควบคุมการนำทางจะถูกจำกัดเพื่อให้แน่ใจว่าคุณจะไม่โกง!",
+            Language.HINDI to "क्या आप सो जाने और बार-बार स्नूज़ दबाने से तंग आ चुके हैं? Alarm आपको पूरी तरह से जगाने के लिए बनाया गया है। अलार्म को बंद करने के लिए, आपको इंटरैक्टिव मिशन (गणित की समस्याओं को हल करना, फोन हिलाना, आकाश की फोटो लेना, या एक निर्दिष्ट कदम चलना) पूरे करने होंगे। अलार्म बजने के बाद नेविगेशन को प्रतिबंधित कर दिया जाता है ताकि आप धोखा न दे सकें!",
+            Language.CANTONESE to "您是否厭倦了睡過頭並反覆按貪睡鍵？Alarm 旨在徹底喚醒您。要關閉鬧鐘，您必須完成互動任務（解決數學題、搖晃手機、拍攝天空照片或行走指定步数）。一旦鬧鐘觸發，導航控制將被限制以確保您不會作弊！"
         ),
         "Meet the Developer" to mapOf(
             Language.CHINESE_SIMPLIFIED to "开发者介绍",
@@ -605,15 +625,15 @@ object Localizer {
             Language.HINDI to "डेवलपर से मिलें",
             Language.CANTONESE to "開發者介紹"
         ),
-        "Hi! I am the creator of this alarm application. I developed SnoozeOff to help you break bad sleeping habits, cultivate morning self-discipline, and get out of bed on time with engaging wake-up missions. Thank you for choosing my app to master your mornings!" to mapOf(
-            Language.CHINESE_SIMPLIFIED to "你好！我是这个闹钟应用的创作者。我开发 SnoozeOff 是为了帮助您打破不良睡眠习惯，培养清晨的自律，并通过有趣的唤醒任务按时起床。感谢您选择我的应用来掌控您的早晨！",
-            Language.CHINESE_TRADITIONAL to "你好！我是這個鬧鐘應用的創作者。我開發 SnoozeOff 是為了幫助您打破不良睡眠習慣，培養清晨的自律，並通過有趣的喚醒任務按時起床。感謝您選擇我的應用來掌控您的早晨！",
+        "Hi! I am the creator of this alarm application. I developed Alarm to help you break bad sleeping habits, cultivate morning self-discipline, and get out of bed on time with engaging wake-up missions. Thank you for choosing my app to master your mornings!" to mapOf(
+            Language.CHINESE_SIMPLIFIED to "你好！我是这个闹钟应用的创作者。我开发 Alarm 是为了帮助您打破不良睡眠习惯，培养清晨的自律，并通过有趣的唤醒任务按时起床。感谢您选择我的应用来掌控您的早晨！",
+            Language.CHINESE_TRADITIONAL to "你好！我是這個鬧鐘應用的創作者。我開發 Alarm 是為了幫助您打破不良睡眠習慣，培養清晨的自律，並通過有趣的喚醒任務按時起床。感謝您選擇我的應用來掌控您的早晨！",
             Language.CHINESE_PINYIN to "Nǐ hǎo! Wǒ shì zhè gè nào zhōng yìng yòng de chuàng zhe...",
             Language.ARABIC to "مرحبًا! أنا مبتكر تطبيق المنبه هذا. لقد قمت بتطوير SnoozeOff لمساعدتك على التخلص من عادات النوم السيئة، وتنمية الانضباط الذاتي في الصباح، والنهوض من السرير في الوقت المحدد مع مهام تفاعلية ممتعة. شكراً لاختيارك تطبيقي للتحكم في صباحك!",
-            Language.TAGALOG to "Kumusta! Ako ang lumikha ng application ng alarma na ito. binuo ko ang SnoozeOff para matulungan kang basagin ang masamang gawi sa pagtulog, linangin ang disiplina sa umaga, at bumangon sa kama sa tamang oras gamit ang mga nakakaengganyong wakeup mission. Salamat sa pagpili sa aking app upang makabisado ang iyong mga umaga!",
-            Language.THAI to "สวัสดี! ฉันคือผู้สร้างแอปพลิเคชันนาฬิกาปลุกนี้ ฉันพัฒนา SnoozeOff เพื่อช่วยคุณเลิกนิสัยการนอนที่ไม่ดี ฝึกวินัยในตนเองตอนเช้า และลุกจากเตียงตรงเวลาด้วยภารกิจปลุกที่น่าสนใจ ขอบคุณที่เลือกใช้แอปของฉันเพื่อควบคุมเช้าวันใหม่ของคุณ!",
-            Language.HINDI to "नमस्ते! मैं इस अलार्मक एप्लिकेशन का निर्माता हूँ। मैंने आपकी नींद की बुरी आदतों को तोड़ने, सुबह के आत्म-अनुशासन को विकसित करने और आकर्षक मिशनों के साथ समय पर बिस्तर से उठने में मदद करने के लिए SnoozeOff विकसित किया है। अपने सुबह को बेहतर बनाने के लिए मेरे ऐप को चुनने के लिए धन्यवाद!",
-            Language.CANTONESE to "你好！我是這個鬧鐘應用的創作者。我開發 SnoozeOff 是為了幫助您打破不良睡眠習慣，培養清晨的自律，並通過有趣的喚醒任務按时起床。感謝您選擇我的應用來掌控您的早晨！"
+            Language.TAGALOG to "Kumusta! Ako ang lumikha ng application ng alarma na ito. binuo ko ang Alarm para matulungan kang basagin ang masamang gawi sa pagtulog, linangin ang disiplina sa umaga, at bumangon sa kama sa tamang oras gamit ang mga nakakaengganyong wakeup mission. Salamat sa pagpili sa aking app upang makabisado ang iyong mga umaga!",
+            Language.THAI to "สวัสดี! ฉันคือผู้สร้างแอปพลิเคชันนาฬิกาปลุกนี้ ฉันพัฒนา Alarm เพื่อช่วยคุณเลิกนิสัยการนอนที่ไม่ดี ฝึกวินัยในตนเองตอนเช้า และลุกจากเตียงตรงเวลาด้วยภารกิจปลุกที่น่าสนใจ ขอบคุณที่เลือกใช้แอปของฉันเพื่อควบคุมเช้าวันใหม่ของคุณ!",
+            Language.HINDI to "नमस्ते! मैं इस अलार्मक एप्लिकेशन का निर्माता हूँ। मैंने आपकी नींद की बुरी आदतों को तोड़ने, सुबह के आत्म-अनुशासन को विकसित करने और आकर्षक मिशनों के साथ समय पर बिस्तर से उठने में मदद करने के लिए Alarm विकसित किया है। अपने सुबह को बेहतर बनाने के लिए मेरे ऐप को चुनने के लिए धन्यवाद!",
+            Language.CANTONESE to "你好！我是這個鬧鐘應用的創作者。我開發 Alarm 是為了幫助您打破不良睡眠習慣，培養清晨的自律，並通過有趣的喚醒任務按时起床。感謝您選擇我的應用來掌控您的早晨！"
         ),
         "Help Us Know You" to mapOf(
             Language.CHINESE_SIMPLIFIED to "让我们了解您",
@@ -942,17 +962,17 @@ object Localizer {
         "No wake-ups today yet" to mapOf(
             Language.CHINESE_SIMPLIFIED to "今天还没有起床记录", Language.CHINESE_TRADITIONAL to "今天還沒有起床記錄",
             Language.CHINESE_PINYIN to "Jīn tiān hái méi...", Language.ARABIC to "لا استيقاظ اليوم بعد",
-            Language.TAGALOG to "Wala pang gising ngayong araw", Language.THAI to "ยังไม่มีการตื่นนอนในวันนี้", Language.HINDI to "आज अभी तक कोई गवाही नहीं", Language.CANTONESE to "今天還沒有起床記錄"
+            Language.TAGALOG to "Wala pang history ng pagbangon mo ngayon", Language.THAI to "ยังไม่มีการตื่นนอนในวันนี้", Language.HINDI to "आज अभी तक कोई गवाही नहीं", Language.CANTONESE to "今天還沒有起床記錄"
         ),
         "Delete Alarm" to mapOf(
             Language.CHINESE_SIMPLIFIED to "删除闹钟", Language.CHINESE_TRADITIONAL to "刪除鬧鐘",
             Language.CHINESE_PINYIN to "Shān chú nào zhōng", Language.ARABIC to "حذف المنبه",
-            Language.TAGALOG to "I-delete ang Alarma", Language.THAI to "ลบนาฬิกาปลุก", Language.HINDI to "अलार्म हटाएं", Language.CANTONESE to "刪除鬧鐘"
+            Language.TAGALOG to "I-delete ang Alarm", Language.THAI to "ลบนาฬิกาปลุก", Language.HINDI to "अलार्म हटाएं", Language.CANTONESE to "刪除鬧鐘"
         ),
         "Are you sure you want to delete this alarm?" to mapOf(
             Language.CHINESE_SIMPLIFIED to "确定要删除此闹钟吗？", Language.CHINESE_TRADITIONAL to "確定要刪除此鬧鐘嗎？",
             Language.CHINESE_PINYIN to "Què dìng yào shān chú cǐ nào zhōng ma?", Language.ARABIC to "هل أنت متأكد من حذف هذا المنبه؟",
-            Language.TAGALOG to "Sigurado ka bang gusto mong burahin ang alarma na ito?", Language.THAI to "คุณแน่ใจหรือไม่ว่าต้องการลบนาฬิกาปลุกนี้?",
+            Language.TAGALOG to "Sigurado ka bang gusto mong burahin ang alarm na ito?", Language.THAI to "คุณแน่ใจหรือไม่ว่าต้องการลบนาฬิกาปลุกนี้?",
             Language.HINDI to "क्या आप वाकई इस अलार्म को हटाना चाहते हैं?", Language.CANTONESE to "確定要刪除此鬧鐘嗎？"
         ),
         "Delete" to mapOf(
@@ -968,17 +988,17 @@ object Localizer {
         "1 alarm" to mapOf(
             Language.CHINESE_SIMPLIFIED to "1 个闹钟", Language.CHINESE_TRADITIONAL to "1 個鬧鐘",
             Language.CHINESE_PINYIN to "1 gè nào zhōng", Language.ARABIC to "منبه واحد",
-            Language.TAGALOG to "1 alarma", Language.THAI to "นาฬิกาปลุก 1 รายการ", Language.HINDI to "1 अलार्म", Language.CANTONESE to "1 個鬧鐘"
+            Language.TAGALOG to "1 alarm", Language.THAI to "นาฬิกาปลุก 1 รายการ", Language.HINDI to "1 अलार्म", Language.CANTONESE to "1 個鬧鐘"
         ),
         "{count} alarms" to mapOf(
             Language.CHINESE_SIMPLIFIED to "{count} 个闹钟", Language.CHINESE_TRADITIONAL to "{count} 個鬧鐘",
             Language.CHINESE_PINYIN to "{count} gè nào zhōng", Language.ARABIC to "{count} منبهات",
-            Language.TAGALOG to "{count} mga alarma", Language.THAI to "นาฬิกาปลุก {count} รายการ", Language.HINDI to "{count} अलार्म", Language.CANTONESE to "{count} 個鬧鐘"
+            Language.TAGALOG to "{count} mga alarm", Language.THAI to "นาฬิกาปลุก {count} รายการ", Language.HINDI to "{count} अलार्म", Language.CANTONESE to "{count} 個鬧鐘"
         ),
         "+ New alarm" to mapOf(
             Language.CHINESE_SIMPLIFIED to "+ 新建闹钟", Language.CHINESE_TRADITIONAL to "+ 新建鬧鐘",
             Language.CHINESE_PINYIN to "+ Xīn jiàn nào zhōng", Language.ARABIC to "+ منبه جديد",
-            Language.TAGALOG to "+ Bagong Alarma", Language.THAI to "+ เพิ่มนาฬิกาปลุก", Language.HINDI to "+ नया अलार्म", Language.CANTONESE to "+ 新建鬧鐘"
+            Language.TAGALOG to "+ Bagong Alarm", Language.THAI to "+ เพิ่มนาฬิกาปลุก", Language.HINDI to "+ नया अलार्म", Language.CANTONESE to "+ 新建鬧鐘"
         ),
         "Set Time" to mapOf(
             Language.CHINESE_SIMPLIFIED to "设置时间", Language.CHINESE_TRADITIONAL to "設置時間",
@@ -1073,7 +1093,7 @@ object Localizer {
         "Alarm sound" to mapOf(
             Language.CHINESE_SIMPLIFIED to "闹钟铃声", Language.CHINESE_TRADITIONAL to "鬧鐘鈴聲",
             Language.CHINESE_PINYIN to "Nào zhōng líng shēng", Language.ARABIC to "صوت المنبه",
-            Language.TAGALOG to "Tunog ng Alarma", Language.THAI to "เสียงนาฬิกาปลุก", Language.HINDI to "अलार्म ध्वनि", Language.CANTONESE to "鬧鐘鈴聲"
+            Language.TAGALOG to "Tunog ng Alarm", Language.THAI to "เสียงนาฬิกาปลุก", Language.HINDI to "अलार्म ध्वनि", Language.CANTONESE to "鬧鐘鈴聲"
         ),
         "VOLUME" to mapOf(
             Language.CHINESE_SIMPLIFIED to "音量", Language.CHINESE_TRADITIONAL to "音量",
@@ -1083,7 +1103,7 @@ object Localizer {
         "CUSTOM SONG" to mapOf(
             Language.CHINESE_SIMPLIFIED to "自定义歌曲", Language.CHINESE_TRADITIONAL to "自定義歌曲",
             Language.CHINESE_PINYIN to "Zì dìng yì gē qǔ", Language.ARABIC to "أغنية مخصصة",
-            Language.TAGALOG to "CUSTOM NA KANTA", Language.THAI to "เพลงที่กำหนดเอง", Language.HINDI to "कस्टम गीत", Language.CANTONESE to "自定義歌曲"
+            Language.TAGALOG to "CUSTOM NA MGA KANTA", Language.THAI to "เพลงที่กำหนดเอง", Language.HINDI to "कस्टम गीत", Language.CANTONESE to "自定義歌曲"
         ),
         "Tap ▶ to preview." to mapOf(
             Language.CHINESE_SIMPLIFIED to "点击 ▶ 试听。", Language.CHINESE_TRADITIONAL to "點擊 ▶ 試聽。",
@@ -1300,7 +1320,7 @@ object Localizer {
         ),
         "Shake your phone vigorously!" to mapOf(
             Language.CHINESE_SIMPLIFIED to "用力摇晃手机！", Language.CHINESE_TRADITIONAL to "用力搖晃手機！", Language.CHINESE_PINYIN to "Yòng lì yáo huàng shǒu jī!",
-            Language.ARABIC to "هز هاتفك بقوة!", Language.TAGALOG to "I-shake nang malakas ang iyong telepono!", Language.THAI to "เขย่าโทรศัพท์ของคุณอย่างแรง!", Language.HINDI to "अपने फोन को जोर से हिलाएं!", Language.CANTONESE to "用力搖晃手機！"
+            Language.ARABIC to "هز هاتفك بقوة!", Language.TAGALOG to "I-shake nang malakas ang iyong cellphone!", Language.THAI to "เขย่าโทรศัพท์ของคุณอย่างแรง!", Language.HINDI to "अपने फोन को जोर से हिलाएं!", Language.CANTONESE to "用力搖晃手機！"
         ),
         "Type the sentence exactly — no typos allowed" to mapOf(
             Language.CHINESE_SIMPLIFIED to "精确输入句子 — 不允许拼写错误", Language.CHINESE_TRADITIONAL to "精確輸入句子 — 不允許拼寫錯誤", Language.CHINESE_PINYIN to "Jīng què shū rù jù zi — bù yǔn xǔ pīn xiě cuò wù",
@@ -1308,7 +1328,7 @@ object Localizer {
         ),
         "Place phone face-down on the floor and do push-ups" to mapOf(
             Language.CHINESE_SIMPLIFIED to "将手机正面朝下放在地板上做俯卧撑", Language.CHINESE_TRADITIONAL to "將手機正面朝下放在地板上做俯臥撐", Language.CHINESE_PINYIN to "Jiāng shǒu jī zhèng miàn cháo xià fàng zài dì bǎn shàng zuò fǔ wò chēng",
-            Language.ARABIC to "ضع الهاتف وجهه لأسفل على الأرض وقم بتمارين الضغط", Language.TAGALOG to "Ilagay ang telepono nang nakaharap sa sahig at mag-push-up", Language.THAI to "วางโทรศัพท์คว่ำหน้าลงบนพื้นแล้ววิดพื้น", Language.HINDI to "फोन को फर्श पर उल्टा रखें और पुश-अप्स करें", Language.CANTONESE to "將手機正面朝下放在地板上做俯臥撐"
+            Language.ARABIC to "ضع الهاتف وجهه لأسفل على الأرض وقم بتمارين الضغط", Language.TAGALOG to "Ilagay ang cellphone nang nakaharap sa sahig at mag-push-up", Language.THAI to "วางโทรศัพท์คว่ำหน้าลงบนพื้นแล้ววิดพื้น", Language.HINDI to "फोन को फर्श पर उल्टा रखें और पुश-अप्स करें", Language.CANTONESE to "將手機正面朝下放在地板上做俯臥撐"
         ),
         "push-ups done" to mapOf(
             Language.CHINESE_SIMPLIFIED to "个俯卧撑已完成", Language.CHINESE_TRADITIONAL to "個俯臥撐已完成", Language.CHINESE_PINYIN to "gè fǔ wò chēng huán chéng",
@@ -1358,10 +1378,10 @@ object Localizer {
             Language.CHINESE_SIMPLIFIED to "跳过任务 (相机故障)", Language.CHINESE_TRADITIONAL to "跳過任務 (相機故障)", Language.CHINESE_PINYIN to "Tiào guò rèn wu (Xiāng jī gù zhàng)",
             Language.ARABIC to "تخطي المهمة (خطأ في الكاميرا)", Language.TAGALOG to "Laktawan ang Misyon (Error sa Camera)", Language.THAI to "ข้ามภารกิจ (เกิดข้อผิดพลาดของกล้อง)", Language.HINDI to "मिशन छोड़ें (कैमरा त्रुटि)", Language.CANTONESE to "跳過任務 (相機故障)"
         ),
-        "SnoozeOff" to mapOf(
-            Language.CHINESE_SIMPLIFIED to "SnoozeOff", Language.CHINESE_TRADITIONAL to "SnoozeOff",
-            Language.CHINESE_PINYIN to "SnoozeOff", Language.ARABIC to "SnoozeOff",
-            Language.TAGALOG to "SnoozeOff", Language.THAI to "SnoozeOff", Language.HINDI to "SnoozeOff", Language.CANTONESE to "SnoozeOff"
+        "Alarm" to mapOf(
+            Language.CHINESE_SIMPLIFIED to "Alarm", Language.CHINESE_TRADITIONAL to "Alarm",
+            Language.CHINESE_PINYIN to "Alarm", Language.ARABIC to "Alarm",
+            Language.TAGALOG to "Alarm", Language.THAI to "Alarm", Language.HINDI to "Alarm", Language.CANTONESE to "Alarm"
         ),
 
         // Objects
@@ -1615,7 +1635,7 @@ object Localizer {
         ),
         "Goal Reached!" to mapOf(
             Language.CHINESE_SIMPLIFIED to "目标达成！", Language.CHINESE_TRADITIONAL to "目標達成！", Language.CHINESE_PINYIN to "Mù biāo dá chéng!",
-            Language.ARABIC to "تم الوصول للهدف!", Language.TAGALOG to "Naabot ang Layunin!", Language.THAI to "บรรลุเป้าหมายแล้ว!", Language.HINDI to "लक्ष्य प्राप्त हुआ!", Language.CANTONESE to "目標達成！"
+            Language.ARABIC to "تم الوصول للهدف!", Language.TAGALOG to "Naabot ang Goal!", Language.THAI to "บรรลุเป้าหมายแล้ว!", Language.HINDI to "लक्ष्य प्राप्त हुआ!", Language.CANTONESE to "目標達成！"
         ),
         "Simulate Match Scan" to mapOf(
             Language.CHINESE_SIMPLIFIED to "模拟扫码成功", Language.CHINESE_TRADITIONAL to "模擬掃碼成功", Language.CHINESE_PINYIN to "Mó nǐ sǎo mǎ chéng gōng",
