@@ -59,7 +59,8 @@ fun OnboardingScreen(
     val coroutineScope = rememberCoroutineScope()
 
     var currentStep by remember { mutableStateOf(1) }
-    val totalSteps = 6
+    val totalSteps = 7
+    var legalAgreed by remember { mutableStateOf(false) }
 
     // Permissions State
     val isOemDevice = remember { OemSettingsHelper.isOemDevice() }
@@ -111,10 +112,11 @@ fun OnboardingScreen(
     var struggleReason by remember { mutableStateOf("") }
     var preferredChallenge by remember { mutableStateOf("") }
 
-    val isNextEnabled = remember(currentStep, struggleReason, preferredChallenge, notificationPermissionGranted, overlayPermissionGranted, lockScreenPermissionGranted, cameraPermissionGranted) {
+    val isNextEnabled = remember(currentStep, struggleReason, preferredChallenge, notificationPermissionGranted, overlayPermissionGranted, lockScreenPermissionGranted, cameraPermissionGranted, legalAgreed) {
         when (currentStep) {
             3 -> struggleReason.isNotEmpty() && preferredChallenge.isNotEmpty()
             4 -> notificationPermissionGranted && overlayPermissionGranted && cameraPermissionGranted && lockScreenPermissionGranted
+            6 -> legalAgreed
             else -> true
         }
     }
@@ -249,7 +251,11 @@ fun OnboardingScreen(
                                         }
                                     }
                                 )
-                                6 -> StepGetStarted()
+                                6 -> StepTermsAndPrivacy(
+                                    agreed = legalAgreed,
+                                    onAgreedChecked = { legalAgreed = it }
+                                )
+                                7 -> StepGetStarted()
                             }
                         }
                     }
@@ -918,6 +924,84 @@ private fun StepGetStarted() {
             textAlign = TextAlign.Center,
             lineHeight = 20.sp
         )
+    }
+}
+
+@Composable
+private fun StepTermsAndPrivacy(
+    agreed: Boolean,
+    onAgreedChecked: (Boolean) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Text(
+            text = Localizer.t("Terms & Privacy Agreement"),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = DarkText
+        )
+
+        Text(
+            text = Localizer.t("Before using the app, please read and agree to our Terms of Service and Privacy Policy, and accept the consequences of missed alarms."),
+            fontSize = 12.sp,
+            color = SubtitleGray,
+            lineHeight = 18.sp
+        )
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = Localizer.t("App Uses & Rules Summary:"),
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = DarkText
+                )
+                Text(
+                    text = Localizer.t("• Local Data: Motion and Camera scans are processed locally on device; no personal details are uploaded."),
+                    fontSize = 12.sp,
+                    color = DarkText,
+                    lineHeight = 16.sp
+                )
+                Text(
+                    text = Localizer.t("• Disclaimer of Liability: The developer has no liability for any missed appointments, lost work, or flights due to missed alarms."),
+                    fontSize = 12.sp,
+                    color = DarkText,
+                    lineHeight = 16.sp
+                )
+            }
+        }
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onAgreedChecked(!agreed) }
+                .padding(vertical = 8.dp)
+        ) {
+            Checkbox(
+                checked = agreed,
+                onCheckedChange = { onAgreedChecked(it) },
+                colors = CheckboxDefaults.colors(checkedColor = OrangePrimary)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = Localizer.t("I agree to the Terms of Service and Privacy Policy, and accept all consequences of missed alarms."),
+                fontSize = 13.sp,
+                color = DarkText,
+                lineHeight = 18.sp
+            )
+        }
     }
 }
 

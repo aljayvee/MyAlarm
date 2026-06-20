@@ -141,6 +141,66 @@ object Localizer {
             Language.HINDI to "गोपनीयता नीति",
             Language.CANTONESE to "隱私政策"
         ),
+        "Terms & Privacy Agreement" to mapOf(
+            Language.CHINESE_SIMPLIFIED to "服务条款与隐私协议",
+            Language.CHINESE_TRADITIONAL to "服務條款與隱私協議",
+            Language.CHINESE_PINYIN to "Fúwù tiáokuǎn yǔ yǐnsī xiéyì",
+            Language.ARABIC to "اتفاقية الشروط والخصوصية",
+            Language.TAGALOG to "Kasunduan sa Mga Tuntunin at Privacy",
+            Language.THAI to "ข้อตกลงและนโยบายความเป็นส่วนตัว",
+            Language.HINDI to "शर्तें और गोपनीयता समझौता",
+            Language.CANTONESE to "服務條款與隱私協議"
+        ),
+        "Before using the app, please read and agree to our Terms of Service and Privacy Policy, and accept the consequences of missed alarms." to mapOf(
+            Language.CHINESE_SIMPLIFIED to "在使用应用之前，请阅读并同意我们的服务条款与隐私政策，并接受因漏掉闹钟而产生的一切后果。",
+            Language.CHINESE_TRADITIONAL to "在使用應用之前，請閱讀並同意我們的服務條款與隱私政策，並接受因漏掉鬧鐘而產生的一切後果。",
+            Language.CHINESE_PINYIN to "Zài shǐyòng yìngyòng zhīqián, qǐng yuèdú bìng tóngyì wǒmen de fúwù tiáokuǎn yǔ yǐnsī zhèngcè, bìng jiēshòu yīn lòudiào nàozhōng ér chǎnshēng de yīqiè hòuguǒ.",
+            Language.ARABIC to "قبل استخدام التطبيق، يرجى قراءة والموافقة على شروط الخدمة وسياسة الخصوصية الخاصة بنا، وقبول عواقب المنبهات الفائتة.",
+            Language.TAGALOG to "Bago gamitin ang app, mangyaring basahin at sumang-ayon sa aming Mga Tuntunin ng Serbisyo at Patakaran sa Privacy, at tanggapin ang mga kahihinatnan ng mga napalampas na alarm.",
+            Language.THAI to "ก่อนใช้งานแอป โปรดอ่านและยอมรับข้อกำหนดการให้บริการและนโยบายความเป็นส่วนตัวของเรา และยอมรับผลกระทบจากนาฬิกาปลุกที่พลาดไป",
+            Language.HINDI to "ऐप का उपयोग करने से पहले, कृपया हमारी सेवा की शर्तों और गोपनीयता नीति को पढ़ें और उनसे सहमत हों, और छूटे हुए अलार्म के परिणामों को स्वीकार करें।",
+            Language.CANTONESE to "在使用應用之前，請閱讀並同意我們的服務條款與隱私政策，並接受因漏掉鬧鐘而產生的一切後果。"
+        ),
+        "I agree to the Terms of Service and Privacy Policy, and accept all consequences of missed alarms." to mapOf(
+            Language.CHINESE_SIMPLIFIED to "我同意服务条款与隐私政策，并接受因漏掉闹钟而产生的一切后果。",
+            Language.CHINESE_TRADITIONAL to "我同意服務條款與隱私政策，並接受因漏掉鬧鐘而產生的一切後果。",
+            Language.CHINESE_PINYIN to "Wǒ tóngyì fúwù tiáokuǎn yǔ yǐnsī zhèngcè, bìng jiēshòu yīn lòudiào nàozhōng ér chǎnshēng de yīqiè hòuguǒ.",
+            Language.ARABIC to "أوافق على شروط الخدمة وسياسة الخصوصية، وأقبل جميع عواقب المنبهات الفائتة.",
+            Language.TAGALOG to "Sumasang-ayon ako sa Mga Tuntunin ng Serbisyo at Patakaran sa Privacy, at tinatanggap ang lahat ng kahihinatnan ng mga napalampas na alarm.",
+            Language.THAI to "ฉันยอมรับข้อกำหนดการให้บริการและนโยบายความเป็นส่วนตัว และยอมรับผลกระทบทั้งหมดจากนาฬิกาปลุกที่พลาดไป",
+            Language.HINDI to "मैं सेवा की शर्तों और गोपनीयता नीति से सहमत हूँ, और छूटे हुए अलार्म के सभी परिणामों को स्वीकार करता हूँ।",
+            Language.CANTONESE to "我同意服務條款與隱私政策，並接受因漏掉鬧鐘而產生的一切後果。"
+        ),
+        "App Uses & Rules Summary:" to mapOf(
+            Language.CHINESE_SIMPLIFIED to "应用使用与规则摘要：",
+            Language.CHINESE_TRADITIONAL to "應用使用與規則摘要：",
+            Language.CHINESE_PINYIN to "Yìngyòng shǐyòng yǔ guīzé zhāiyào:",
+            Language.ARABIC to "ملخص استخدام التطبيق وقواعده:",
+            Language.TAGALOG to "Buod ng Paggamit at Mga Panuntunan ng App:",
+            Language.THAI to "สรุปการใช้งานและกฎของแอป:",
+            Language.HINDI to "ऐप उपयोग और नियम सारांश:",
+            Language.CANTONESE to "應用使用與規則摘要："
+        ),
+        "• Local Data: Motion and Camera scans are processed locally on device; no personal details are uploaded." to mapOf(
+            Language.CHINESE_SIMPLIFIED to "• 本地数据：运动和相机扫描完全在本地处理；不上传任何个人信息。",
+            Language.CHINESE_TRADITIONAL to "• 本地數據：運動和相機掃描完全在本地處理；不上傳任何個人信息。",
+            Language.CHINESE_PINYIN to "• Běndì shùjù: Yùndòng hé xiàngjī sǎomiáo wánquán zài běndì chǔlǐ; bù shàngchuán rènhé gèrén xìnxī.",
+            Language.ARABIC to "• البيانات المحلية: تتم معالجة عمليات مسح الحركة والكاميرا محليًا على الجهاز؛ ولا يتم تحميل أي تفاصيل شخصية.",
+            Language.TAGALOG to "• Lokal na Data: Ang mga scan ng motion at camera ay pinoproseso nang lokal sa device; walang personal na detalye ang ina-upload.",
+            Language.THAI to "• ข้อมูลในเครื่อง: การสแกนการเคลื่อนไหวและกล้องจะประมวลผลภายในเครื่องเท่านั้น ไม่มีการอัปโหลดข้อมูลส่วนตัวใดๆ",
+            Language.HINDI to "• स्थानीय डेटा: मोशन और कैमरा स्कैन स्थानीय रूप से डिवाइस पर संसाधित होते हैं; कोई व्यक्तिगत विवरण अपलोड नहीं किया जाता है।",
+            Language.CANTONESE to "• 本地數據：運動和相機掃描完全在本地處理；不上傳任何個人信息。"
+        ),
+        "• Disclaimer of Liability: The developer has no liability for any missed appointments, lost work, or flights due to missed alarms." to mapOf(
+            Language.CHINESE_SIMPLIFIED to "• 免责声明：开发者对因闹钟未响而导致的任何错过约会、失业或耽误航班不承担任何责任。",
+            Language.CHINESE_TRADITIONAL to "• 免責聲明：開發者對因鬧鐘未響而導致的任何錯過約會、失業或耽誤航班不承擔任何責任。",
+            Language.CHINESE_PINYIN to "• Miǎn zé shēng míng: Kāi fā zhě duì yīn nào zhōng wèi xiǎng ér dǎo zhì de rèn hé cuò guò yuē huì, shī yè huò dān wù háng bān bù chéng dān rèn hé zé rèn.",
+            Language.ARABIC to "• إخلاء المسؤولية: لا يتحمل المطور أي مسؤولية عن أي مواعيد فائتة، أو فقدان عمل، أو رحلات طيران بسبب المنبهات الفائتة.",
+            Language.TAGALOG to "• Disclaimer ng Pananagutan: Walang pananagutan ang developer para sa anumang napalampas na appointment, nawalang trabaho, o flight dahil sa napalampas na alarm.",
+            Language.THAI to "• ข้อปฏิเสธความรับผิดชอบ: ผู้พัฒนาจะไม่รับผิดชอบต่อการพลาดนัด การสูญเสียงาน หรือเที่ยวบินเนื่องจากนาฬิกาปลุกที่พลาดไป",
+            Language.HINDI to "• देयता का अस्वीकरण: छूटे हुए अलार्म के कारण किसी भी छूटी हुई नियुक्तियों, खोए हुए काम या उड़ानों के लिए डेवलपर की कोई देयता नहीं है।",
+            Language.CANTONESE to "• 免責聲明：開發者對因鬧鐘未響而導致的任何錯過約會、失業或耽誤航班不承擔任何責任。"
+        ),
         "streak" to mapOf(
             Language.CHINESE_SIMPLIFIED to "连续天数",
             Language.CHINESE_TRADITIONAL to "連續天數",
