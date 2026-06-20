@@ -1,7 +1,7 @@
 {
-  "latestVersionCode": 6,
-  "latestVersionName": "1.1.6",
-  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v1.1.6-prod/alarm-prod.apk",
+  "latestVersionCode": 7,
+  "latestVersionName": "1.1.7",
+  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v1.1.7-prod/alarm-prod.apk",
   "forceUpdate": true,
-  "releaseNotes": "Added: New Ringtones available!\nOptimized Performance"
+  "releaseNotes": "Fixed an issue in Infinix users where the app crashes. \nImproved Stability of the system."
 }
