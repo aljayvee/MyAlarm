@@ -15,7 +15,7 @@ object AlarmScheduler {
     private const val BACKUP_REQUEST_CODE_OFFSET = 10_000
 
     fun schedule(context: Context, alarm: AlarmEntity) {
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager ?: return
 
         val triggerTime = calculateNextTriggerTime(alarm.hour, alarm.minute, alarm.repeatDays)
 
@@ -30,42 +30,69 @@ object AlarmScheduler {
         val showIntent = createShowIntent(context, alarm)
         val alarmClockInfo = AlarmManager.AlarmClockInfo(triggerTime, showIntent)
 
-        alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val hasPermission = try {
+                    alarmManager.canScheduleExactAlarms()
+                } catch (t: Throwable) {
+                    t.printStackTrace()
+                    false
+                }
+                if (hasPermission) {
+                    alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
+                } else {
+                    alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent)
+                }
+            } else {
+                alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
+            }
+        } catch (e: Throwable) {
+            e.printStackTrace()
+            try {
+                alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent)
+            } catch (ex: Throwable) {
+                ex.printStackTrace()
+            }
+        }
     }
 
     fun cancel(context: Context, alarmId: Long) {
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager ?: return
 
-        val intent = Intent(context, AlarmReceiver::class.java).apply {
-            action = "com.application.myalarm.ALARM_TRIGGER"
-        }
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            alarmId.toInt(),
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-        alarmManager.cancel(pendingIntent)
-        pendingIntent.cancel()
+        try {
+            val intent = Intent(context, AlarmReceiver::class.java).apply {
+                action = "com.application.myalarm.ALARM_TRIGGER"
+            }
+            val pendingIntent = PendingIntent.getBroadcast(
+                context,
+                alarmId.toInt(),
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            alarmManager.cancel(pendingIntent)
+            pendingIntent.cancel()
 
-        // Also cancel any backup alarm
-        val backupIntent = Intent(context, AlarmReceiver::class.java).apply {
-            action = "com.application.myalarm.BACKUP_ALARM_TRIGGER"
+            // Also cancel any backup alarm
+            val backupIntent = Intent(context, AlarmReceiver::class.java).apply {
+                action = "com.application.myalarm.BACKUP_ALARM_TRIGGER"
+            }
+            val backupPendingIntent = PendingIntent.getBroadcast(
+                context,
+                alarmId.toInt() + BACKUP_REQUEST_CODE_OFFSET,
+                backupIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            alarmManager.cancel(backupPendingIntent)
+            backupPendingIntent.cancel()
+        } catch (e: Throwable) {
+            e.printStackTrace()
         }
-        val backupPendingIntent = PendingIntent.getBroadcast(
-            context,
-            alarmId.toInt() + BACKUP_REQUEST_CODE_OFFSET,
-            backupIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-        alarmManager.cancel(backupPendingIntent)
-        backupPendingIntent.cancel()
     }
 
     fun scheduleBackup(context: Context, alarm: AlarmEntity) {
         if (!alarm.isBackupAlarmEnabled) return
 
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager ?: return
 
         val triggerTime = System.currentTimeMillis() + alarm.backupAlarmMinutes * 60 * 1000L
 
@@ -96,7 +123,30 @@ object AlarmScheduler {
         val showIntent = createShowIntent(context, alarm)
         val alarmClockInfo = AlarmManager.AlarmClockInfo(triggerTime, showIntent)
 
-        alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val hasPermission = try {
+                    alarmManager.canScheduleExactAlarms()
+                } catch (t: Throwable) {
+                    t.printStackTrace()
+                    false
+                }
+                if (hasPermission) {
+                    alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
+                } else {
+                    alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent)
+                }
+            } else {
+                alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
+            }
+        } catch (e: Throwable) {
+            e.printStackTrace()
+            try {
+                alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent)
+            } catch (ex: Throwable) {
+                ex.printStackTrace()
+            }
+        }
     }
 
     fun rescheduleAll(context: Context) {
