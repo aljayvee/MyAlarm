@@ -14,8 +14,8 @@ android {
         applicationId = "com.application.myalarm"
         minSdk = 26
         targetSdk = 36
-        versionCode = 8
-        versionName = "1.5.8.4"
+        versionCode = 9
+        versionName = "2.6.9.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
