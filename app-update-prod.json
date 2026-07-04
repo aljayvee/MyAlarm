@@ -1,7 +1,7 @@
 {
-  "latestVersionCode": 10,
-  "latestVersionName": "2.2.1",
-  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.2.1-prod/alarm-prod.apk",
-  "forceUpdate": false,
-  "releaseNotes": "Fixed navigation resets on device rotation.\nFixed back button immediately exiting the app on nested screens."
+  "latestVersionCode": 11,
+  "latestVersionName": "2.2.2",
+  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.2.2-prod/alarm-prod.apk",
+  "forceUpdate": true,
+  "releaseNotes": "UI/UX Enhancements: Added keyboard-safeguard scrolling to input missions (Math, Typing, Affirmation) and redesigned the bottom navigation into a modern, rounded floating bar.\n\nFixed a bug.\nOptimized the app's User Interface."
 }
