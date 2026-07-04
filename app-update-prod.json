@@ -1,7 +1,7 @@
 {
-  "latestVersionCode": 9,
-  "latestVersionName": "2.2.0",
-  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.2.0-prod/alarm-prod.apk",
-  "forceUpdate": true,
-  "releaseNotes": "NEW BIG UPDATE FOR THE PRIVACY POLICY OF THE APP!\n\nFollowing are the changes:\n-Adding Terms to the app usage\n-Adding Policy to the app usage\nFixes Bugs in the app\n\nNOTE: This changes doesn't make the app lose all their data.\n\nSAFE UPDATE!"
+  "latestVersionCode": 10,
+  "latestVersionName": "2.2.1",
+  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.2.1-prod/alarm-prod.apk",
+  "forceUpdate": false,
+  "releaseNotes": "Fixed navigation resets on device rotation.\nFixed back button immediately exiting the app on nested screens."
 }
