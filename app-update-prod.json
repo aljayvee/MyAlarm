@@ -1,7 +1,7 @@
 {
-  "latestVersionCode": 11,
-  "latestVersionName": "2.7.0.1",
-  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.7.0.1-prod/alarm-prod.apk",
+  "latestVersionCode": 12,
+  "latestVersionName": "2.7.0.2",
+  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.7.0.2-prod/alarm-prod.apk",
   "forceUpdate": true,
-  "releaseNotes": "UI/UX Enhancements: Added keyboard-safeguard scrolling to input missions (Math, Typing, Affirmation) and redesigned the bottom navigation into a modern, rounded floating bar.\n\nFixed a bug.\nOptimized the app's User Interface."
+  "releaseNotes": "UI/UX Enhancements: Redesigned the bottom navigation into a modern, rounded floating bar.\n\nFixed a bug.\nOptimized the app's User Interface."
 }
