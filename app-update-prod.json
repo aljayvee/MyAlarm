@@ -1,7 +1,7 @@
 {
-  "latestVersionCode": 14,
-  "latestVersionName": "2.7.1.2",
-  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.7.1.2-prod/alarm-prod.apk",
+  "latestVersionCode": 15,
+  "latestVersionName": "2.7.1.3",
+  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.7.1.3-prod/alarm-prod.apk",
   "forceUpdate": true,
-  "releaseNotes": "User Interface Improvements:\n- The app has now an optimized UI design.\n\nUser Experience Improvements:\n- The app epxerience much more intuitive and interactive than the previous versions.\n\nChanges Made:\n- Permissions are optimize and are not require on the setup screen to configured.\n- Installing an update is secured through authorization signature checks.\n- Fixes bugs found in the app.\n- Improved Security."
+  "releaseNotes": "Changes Made:\n\n- Fixes Bugs\n\n- Improved Security"
 }
