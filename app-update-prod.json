@@ -1,7 +1,7 @@
 {
-  "latestVersionCode": 13,
-  "latestVersionName": "2.7.0.3",
-  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.7.0.3-prod/alarm-prod.apk",
+  "latestVersionCode": 14,
+  "latestVersionName": "2.7.1.2",
+  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.7.1.2-prod/alarm-prod.apk",
   "forceUpdate": true,
-  "releaseNotes": "UI/UX Enhancements:\n1. Removed Underneath White Stripe.\n2. Disabled Click Ripple Gray Highlight.\n3. Fixed a bug.\n4. Optimized the app's User Interface."
+  "releaseNotes": "User Interface Improvements:\n- The app has now an optimized UI design.\n\nUser Experience Improvements:\n- The app epxerience much more intuitive and interactive than the previous versions.\n\nChanges Made:\n- Permissions are optimize and are not require on the setup screen to configured.\n- Installing an update is secured through authorization signature checks.\n- Fixes bugs found in the app.\n- Improved Security."
 }
