@@ -13,9 +13,9 @@ android {
     defaultConfig {
         applicationId = "com.application.myalarm"
         minSdk = 26
-        targetSdk = 36
-        versionCode = 5
-        versionName = "1.2.4.1"
+        targetSdk = 37
+        versionCode = 15
+        versionName = "2.7.1.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -27,9 +27,11 @@ android {
             buildConfigField("String", "UPDATE_JSON_URL", "\"https://raw.githubusercontent.com/aljayvee/MyAlarm/dev/app-update-dev.json\"")
         }
         release {
+            manifestPlaceholders += mapOf()
             applicationIdSuffix = ".prod"
             manifestPlaceholders["appName"] = "Alarm"
             buildConfigField("String", "UPDATE_JSON_URL", "\"https://raw.githubusercontent.com/aljayvee/MyAlarm/main/app-update-prod.json\"")
+            signingConfig = signingConfigs.getByName("debug")
             optimization {
                 enable = false
             }

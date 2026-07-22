@@ -1,7 +1,7 @@
 {
-  "latestVersionCode": 9,
-  "latestVersionName": "2.2.0",
-  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.2.0-prod/alarm-prod.apk",
+  "latestVersionCode": 5,
+  "latestVersionName": "1.1.5",
+  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v1.1.5-prod/alarm-prod.apk",
   "forceUpdate": true,
-  "releaseNotes": "NEW BIG UPDATE FOR THE PRIVACY POLICY OF THE APP!\n\nFollowing are the changes:\n-Adding Terms to the app usage\n-Adding Policy to the app usage\nFixes Bugs in the app\n\nNOTE: This changes doesn't make the app lose all their data.\n\nSAFE UPDATE!"
+  "releaseNotes": "Added: A return button for the update pop-up message.\nCorrected the name of the app from 'SnoozeOff' to 'Alarm'.."
 }

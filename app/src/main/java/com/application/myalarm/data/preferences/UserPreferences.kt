@@ -18,6 +18,7 @@ class UserPreferences(private val context: Context) {
         val BEST_STREAK = intPreferencesKey("best_streak")
         val LAST_DISMISS_DATE = stringPreferencesKey("last_dismiss_date")
         val NOTIFICATION_PERMISSION_ASKED = booleanPreferencesKey("notification_permission_asked")
+        val LOCK_SCREEN_PERMISSION_ASKED = booleanPreferencesKey("lock_screen_permission_asked")
         val SELECTED_LANGUAGE = stringPreferencesKey("selected_language")
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
         val LAST_VERSION_CODE = intPreferencesKey("last_version_code")
@@ -37,6 +38,10 @@ class UserPreferences(private val context: Context) {
 
     val notificationPermissionAsked: Flow<Boolean> = context.dataStore.data.map { prefs ->
         prefs[NOTIFICATION_PERMISSION_ASKED] ?: false
+    }
+
+    val lockScreenPermissionAsked: Flow<Boolean> = context.dataStore.data.map { prefs ->
+        prefs[LOCK_SCREEN_PERMISSION_ASKED] ?: false
     }
 
     val selectedLanguage: Flow<String> = context.dataStore.data.map { prefs ->
@@ -72,6 +77,12 @@ class UserPreferences(private val context: Context) {
     suspend fun setNotificationPermissionAsked(asked: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[NOTIFICATION_PERMISSION_ASKED] = asked
+        }
+    }
+
+    suspend fun setLockScreenPermissionAsked(asked: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[LOCK_SCREEN_PERMISSION_ASKED] = asked
         }
     }
 

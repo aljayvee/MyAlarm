@@ -24,6 +24,7 @@ import com.application.myalarm.ui.alarms.SoundPickerScreen
 import com.application.myalarm.ui.home.HomeScreen
 import com.application.myalarm.ui.insights.InsightsScreen
 import com.application.myalarm.ui.settings.SettingsScreen
+import com.application.myalarm.ui.settings.LegalScreen
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.background
@@ -34,7 +35,25 @@ import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.material3.LocalRippleConfiguration
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.activity.compose.BackHandler
+import androidx.compose.runtime.saveable.rememberSaveable
+import android.Manifest
+import android.os.Build
+import android.content.pm.PackageManager
+import androidx.core.content.ContextCompat
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import com.application.myalarm.util.Localizer
 
 private val OrangePrimary = Color(0xFFFF8C00)
 private val OrangeLight = Color(0xFFFFF3E0)
@@ -52,6 +71,73 @@ fun AppNavigation() {
     val lastVersionCode by userPrefs.lastVersionCode.collectAsState(initial = 0)
     var showUpdateSuccessDialog by remember { mutableStateOf(false) }
     var updatedVersionName by remember { mutableStateOf("") }
+
+    var showNotificationPermissionDialog by remember { mutableStateOf(false) }
+    val notificationLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { _ -> }
+
+    fun checkNotificationPermission(ctx: android.content.Context): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(
+                ctx,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+    }
+
+    LaunchedEffect(onboardingCompleted) {
+        if (onboardingCompleted == true) {
+            if (!checkNotificationPermission(context)) {
+                showNotificationPermissionDialog = true
+            }
+        }
+    }
+
+    if (showNotificationPermissionDialog) {
+        AlertDialog(
+            onDismissRequest = { showNotificationPermissionDialog = false },
+            title = {
+                Text(
+                    text = Localizer.t("Enable Notifications"),
+                    fontWeight = FontWeight.Bold,
+                    color = DarkText
+                )
+            },
+            text = {
+                Text(
+                    text = Localizer.t("To ensure you never miss your alarms, MyAlarm needs permission to send you notifications. This allows us to ring alarms on time, show active timer controls, and alert you when a mission is pending."),
+                    color = DarkText,
+                    fontSize = 14.sp
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showNotificationPermissionDialog = false
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            notificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                        }
+                    },
+                    colors = ButtonDefaults.textButtonColors(contentColor = OrangePrimary)
+                ) {
+                    Text(Localizer.t("Enable"))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showNotificationPermissionDialog = false },
+                    colors = ButtonDefaults.textButtonColors(contentColor = DarkText)
+                ) {
+                    Text(Localizer.t("Not Now"))
+                }
+            },
+            containerColor = Color.White,
+            shape = androidx.compose.foundation.shape.RoundedCornerShape(20.dp)
+        )
+    }
 
     LaunchedEffect(lastVersionCode, onboardingCompleted) {
         if (onboardingCompleted == true) {
@@ -96,25 +182,12 @@ fun AppNavigation() {
         )
     }
 
-    var updateInfo by remember { mutableStateOf<com.application.myalarm.update.AppUpdateInfo?>(null) }
-
     LaunchedEffect(onboardingCompleted) {
         if (onboardingCompleted == true) {
             com.application.myalarm.update.AppUpdateChecker.checkForUpdate(context) { info ->
-                updateInfo = info
+                com.application.myalarm.update.AppUpdateChecker.updateAvailableInBackground.value = (info != null)
             }
         }
-    }
-
-    updateInfo?.let { info ->
-        AppUpdateDialog(
-            updateInfo = info,
-            onDismiss = {
-                if (!info.forceUpdate) {
-                    updateInfo = null
-                }
-            }
-        )
     }
 
     LaunchedEffect(selectedLanguage) {
@@ -140,62 +213,82 @@ fun AppNavigation() {
         return
     }
 
-    var currentRoute by remember { mutableStateOf("home") }
-    val backStack = remember { mutableStateListOf("home") }
+    val navState = rememberSaveable(saver = AppNavigationState.Saver) {
+        AppNavigationState()
+    }
     
+    // Intercept phone/device back button press when backstack has other elements
+    BackHandler(enabled = navState.backStack.size > 1) {
+        navState.navigateBack()
+    }
+
     // Lift the editViewModel so that selected mission/sound changes are retained
     val editViewModel: AlarmEditViewModel = viewModel()
 
-    val navigate = { route: String ->
-        backStack.add(route)
-        currentRoute = route
-    }
-
-    val navigateBack = {
-        if (backStack.size > 1) {
-            backStack.removeAt(backStack.lastIndex)
-            currentRoute = backStack.last()
-        }
-    }
-
     Scaffold(
+        containerColor = Color(0xFFF5F5F5), // Set soft grey background color matching screens
         bottomBar = {
-            if (currentRoute in listOf("home", "alarms", "insights", "settings")) {
-                NavigationBar(containerColor = Color.White) {
-                    val tabs = listOf(
-                        Triple("home", "Home", Icons.Default.Home),
-                        Triple("alarms", "Alarms", Icons.Default.Alarm),
-                        Triple("insights", "Insights", Icons.Default.Assessment),
-                        Triple("settings", "Settings", Icons.Default.Settings)
-                    )
-                    
-                    tabs.forEach { (route, label, icon) ->
-                        val isSelected = currentRoute == route
-                        NavigationBarItem(
-                            selected = isSelected,
-                            onClick = {
-                                if (currentRoute != route) {
-                                    backStack.clear()
-                                    backStack.add(route)
-                                    currentRoute = route
-                                }
-                            },
-                            label = { 
-                                Text(
-                                    text = com.application.myalarm.util.Localizer.t(label), 
-                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                    fontSize = 11.sp
-                                ) 
-                            },
-                            icon = { Icon(icon, contentDescription = label) },
-                            colors = NavigationBarItemDefaults.colors(
-                                selectedIconColor = OrangePrimary,
-                                selectedTextColor = OrangePrimary,
-                                unselectedIconColor = SubtitleGray,
-                                unselectedTextColor = SubtitleGray,
-                                indicatorColor = OrangeLight
-                            )
+            if (navState.currentRoute in listOf("home", "alarms", "insights", "settings")) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding()
+                        .padding(bottom = 24.dp), // spacing from screen bottom
+                    contentAlignment = Alignment.Center
+                ) {
+                    Surface(
+                        modifier = Modifier
+                            .width(280.dp) // Apple-style compact dock width
+                            .height(60.dp), // Sleeker height without text labels
+                        shape = androidx.compose.foundation.shape.RoundedCornerShape(30.dp), // Perfect pill shape (height / 2)
+                        color = Color(0xEEFAFAFA), // Soft white with transparency
+                        tonalElevation = 0.dp, // Disable tonal tint
+                        shadowElevation = 8.dp, // Soft shadow
+                        border = BorderStroke(
+                            width = 1.dp,
+                            color = Color(0x18000000) // very light subtle border outline
                         )
+                    ) {
+                        @OptIn(ExperimentalMaterial3Api::class)
+                        CompositionLocalProvider(LocalRippleConfiguration provides null) {
+                            NavigationBar(
+                                containerColor = Color.Transparent, // Surface draws background
+                                modifier = Modifier.fillMaxSize(),
+                                windowInsets = WindowInsets(0, 0, 0, 0) // clear default insets
+                            ) {
+                                val tabs = listOf(
+                                    Triple("home", "Home", Icons.Default.Home),
+                                    Triple("alarms", "Alarms", Icons.Default.Alarm),
+                                    Triple("insights", "Insights", Icons.Default.Assessment),
+                                    Triple("settings", "Settings", Icons.Default.Settings)
+                                )
+                                
+                                tabs.forEach { (route, label, icon) ->
+                                    val isSelected = navState.currentRoute == route
+                                    NavigationBarItem(
+                                        selected = isSelected,
+                                        onClick = {
+                                            if (navState.currentRoute != route) {
+                                                navState.selectTab(route)
+                                            }
+                                        },
+                                        icon = { 
+                                            Icon(
+                                                imageVector = icon, 
+                                                contentDescription = label,
+                                                modifier = Modifier.size(24.dp)
+                                            ) 
+                                        },
+                                        colors = NavigationBarItemDefaults.colors(
+                                            selectedIconColor = OrangePrimary,
+                                            unselectedIconColor = SubtitleGray,
+                                            indicatorColor = Color.Transparent // iOS style: no background pill indicator!
+                                        ),
+                                        alwaysShowLabel = false
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -204,40 +297,55 @@ fun AppNavigation() {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(
+                    top = innerPadding.calculateTopPadding(),
+                    start = innerPadding.calculateStartPadding(androidx.compose.ui.unit.LayoutDirection.Ltr),
+                    end = innerPadding.calculateEndPadding(androidx.compose.ui.unit.LayoutDirection.Ltr)
+                )
         ) {
             when {
-                currentRoute == "home" -> {
-                    HomeScreen(onNavigate = navigate)
+                navState.currentRoute == "home" -> {
+                    HomeScreen(onNavigate = navState::navigate)
                 }
-                currentRoute == "alarms" -> {
-                    AlarmsScreen(onNavigate = navigate)
+                navState.currentRoute == "alarms" -> {
+                    AlarmsScreen(onNavigate = navState::navigate)
                 }
-                currentRoute == "insights" -> {
+                navState.currentRoute == "insights" -> {
                     InsightsScreen()
                 }
-                currentRoute == "settings" -> {
-                    SettingsScreen()
+                navState.currentRoute == "settings" -> {
+                    SettingsScreen(onNavigate = navState::navigate)
                 }
-                currentRoute.startsWith("alarm_edit/") -> {
-                    val alarmId = currentRoute.substringAfter("alarm_edit/").toLongOrNull() ?: -1L
+                navState.currentRoute == "terms_of_service" -> {
+                    LegalScreen(type = "terms", onBack = navState::navigateBack)
+                }
+                navState.currentRoute == "privacy_policy" -> {
+                    LegalScreen(type = "privacy", onBack = navState::navigateBack)
+                }
+                navState.currentRoute == "update" -> {
+                    com.application.myalarm.ui.update.UpdateScreen(
+                        onBack = navState::navigateBack
+                    )
+                }
+                navState.currentRoute.startsWith("alarm_edit/") -> {
+                    val alarmId = navState.currentRoute.substringAfter("alarm_edit/").toLongOrNull() ?: -1L
                     AlarmEditScreen(
                         alarmId = alarmId,
                         viewModel = editViewModel,
-                        onNavigate = navigate,
-                        onBack = navigateBack
+                        onNavigate = navState::navigate,
+                        onBack = navState::navigateBack
                     )
                 }
-                currentRoute == "mission_picker" -> {
+                navState.currentRoute == "mission_picker" -> {
                     MissionPickerScreen(
                         viewModel = editViewModel,
-                        onBack = navigateBack
+                        onBack = navState::navigateBack
                     )
                 }
-                currentRoute == "sound_picker" -> {
+                navState.currentRoute == "sound_picker" -> {
                     SoundPickerScreen(
                         viewModel = editViewModel,
-                        onBack = navigateBack
+                        onBack = navState::navigateBack
                     )
                 }
             }
@@ -245,126 +353,5 @@ fun AppNavigation() {
     }
 }
 
-@Composable
-fun AppUpdateDialog(
-    updateInfo: com.application.myalarm.update.AppUpdateInfo,
-    onDismiss: () -> Unit
-) {
-    val context = LocalContext.current
-    var isDownloading by remember { mutableStateOf(false) }
-    var downloadProgress by remember { mutableStateOf(0) }
-    var downloadError by remember { mutableStateOf<String?>(null) }
 
-    AlertDialog(
-        onDismissRequest = {
-            if (!updateInfo.forceUpdate && !isDownloading) {
-                onDismiss()
-            }
-        },
-        title = {
-            Text(
-                text = "New Update Available",
-                fontWeight = FontWeight.Bold,
-                color = DarkText
-            )
-        },
-        text = {
-            Column {
-                Text(
-                    text = "A new version (${updateInfo.latestVersionName}) is available. Please update to get the latest features and fixes.",
-                    color = DarkText,
-                    fontSize = 14.sp
-                )
-                if (!updateInfo.releaseNotes.isNullOrEmpty()) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "What's New:",
-                        fontWeight = FontWeight.SemiBold,
-                        color = OrangePrimary,
-                        fontSize = 12.sp
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = updateInfo.releaseNotes,
-                        color = SubtitleGray,
-                        fontSize = 12.sp
-                    )
-                }
-                if (isDownloading) {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = "Downloading... $downloadProgress%",
-                        fontWeight = FontWeight.SemiBold,
-                        color = OrangePrimary,
-                        fontSize = 12.sp
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    LinearProgressIndicator(
-                        progress = { downloadProgress / 100f },
-                        modifier = Modifier.fillMaxWidth(),
-                        color = OrangePrimary,
-                        trackColor = OrangeLight
-                    )
-                }
-                if (downloadError != null) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = downloadError!!,
-                        color = MaterialTheme.colorScheme.error,
-                        fontSize = 12.sp
-                    )
-                }
-            }
-        },
-        confirmButton = {
-            Button(
-                onClick = {
-                    isDownloading = true
-                    downloadError = null
-                    com.application.myalarm.update.AppUpdateChecker.downloadApk(
-                        context = context,
-                        url = updateInfo.apkUrl,
-                        onProgress = { progress ->
-                            downloadProgress = progress
-                        },
-                        onComplete = { file ->
-                            isDownloading = false
-                            if (file != null && file.exists()) {
-                                try {
-                                    val apkUri = androidx.core.content.FileProvider.getUriForFile(
-                                        context,
-                                        "${context.packageName}.fileprovider",
-                                        file
-                                    )
-                                    val intent = Intent(Intent.ACTION_VIEW).apply {
-                                        setDataAndType(apkUri, "application/vnd.android.package-archive")
-                                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION
-                                    }
-                                    context.startActivity(intent)
-                                } catch (e: Exception) {
-                                    downloadError = "Installation failed: ${e.message}"
-                                }
-                            } else {
-                                downloadError = "Download failed. Please try again."
-                            }
-                        }
-                    )
-                },
-                enabled = !isDownloading,
-                colors = ButtonDefaults.buttonColors(containerColor = OrangePrimary)
-            ) {
-                Text(if (isDownloading) "Downloading..." else "Update", color = Color.White)
-            }
-        },
-        dismissButton = {
-            if (!updateInfo.forceUpdate && !isDownloading) {
-                TextButton(onClick = onDismiss) {
-                    Text("Back", color = SubtitleGray)
-                }
-            }
-        },
-        containerColor = Color.White,
-        shape = androidx.compose.foundation.shape.RoundedCornerShape(20.dp)
-    )
-}
 

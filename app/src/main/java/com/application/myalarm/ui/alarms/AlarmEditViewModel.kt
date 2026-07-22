@@ -124,12 +124,14 @@ class AlarmEditViewModel(application: Application) : AndroidViewModel(applicatio
                     Instant.now().toEpochMilli()
                 }
             )
-            if (isEditing) {
+            val savedAlarm = if (isEditing) {
                 alarmRepository.updateAlarm(alarm)
+                alarm
             } else {
-                alarmRepository.insertAlarm(alarm)
+                val newId = alarmRepository.insertAlarm(alarm)
+                alarm.copy(id = newId)
             }
-            AlarmScheduler.schedule(getApplication<AlarmApplication>(), alarm)
+            AlarmScheduler.schedule(getApplication<AlarmApplication>(), savedAlarm)
             isSaving = false
             onComplete()
         }

@@ -60,42 +60,7 @@ fun OnboardingScreen(
 
     var currentStep by remember { mutableStateOf(1) }
     val totalSteps = 6
-
-    // Permissions State
-    val isOemDevice = remember { OemSettingsHelper.isOemDevice() }
-
-    var notificationPermissionGranted by remember { mutableStateOf(checkNotificationPermission(context)) }
-    var overlayPermissionGranted by remember { mutableStateOf(Settings.canDrawOverlays(context)) }
-    var lockScreenPermissionGranted by remember { mutableStateOf(!isOemDevice) }
-    var cameraPermissionGranted by remember { mutableStateOf(checkCameraPermission(context)) }
-
-    val notificationLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        notificationPermissionGranted = isGranted
-    }
-
-    val cameraLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        cameraPermissionGranted = isGranted
-    }
-
-    // Lifecycle observer to re-check permissions when returning from Settings screen
-    val lifecycleOwner = LocalLifecycleOwner.current
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                notificationPermissionGranted = checkNotificationPermission(context)
-                overlayPermissionGranted = Settings.canDrawOverlays(context)
-                cameraPermissionGranted = checkCameraPermission(context)
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-        }
-    }
+    var legalAgreed by remember { mutableStateOf(false) }
 
     // Language state
     var selectedLangCode by remember { mutableStateOf("en") }
@@ -111,10 +76,10 @@ fun OnboardingScreen(
     var struggleReason by remember { mutableStateOf("") }
     var preferredChallenge by remember { mutableStateOf("") }
 
-    val isNextEnabled = remember(currentStep, struggleReason, preferredChallenge, notificationPermissionGranted, overlayPermissionGranted, lockScreenPermissionGranted, cameraPermissionGranted) {
+    val isNextEnabled = remember(currentStep, struggleReason, preferredChallenge, legalAgreed) {
         when (currentStep) {
             3 -> struggleReason.isNotEmpty() && preferredChallenge.isNotEmpty()
-            4 -> notificationPermissionGranted && overlayPermissionGranted && cameraPermissionGranted && lockScreenPermissionGranted
+            5 -> legalAgreed
             else -> true
         }
     }
@@ -205,49 +170,17 @@ fun OnboardingScreen(
                                     preferredChallenge = preferredChallenge,
                                     onPreferredChallengeSelect = { preferredChallenge = it }
                                 )
-                                4 -> StepPermissions(
-                                    notificationGranted = notificationPermissionGranted,
-                                    overlayGranted = overlayPermissionGranted,
-                                    lockScreenGranted = lockScreenPermissionGranted,
-                                    cameraGranted = cameraPermissionGranted,
-                                    isOemDevice = isOemDevice,
-                                    onRequestNotification = {
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                            notificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                                        } else {
-                                            notificationPermissionGranted = true
-                                        }
-                                    },
-                                    onRequestOverlay = {
-                                        val intent = Intent(
-                                            Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                                            Uri.parse("package:${context.packageName}")
-                                        )
-                                        context.startActivity(intent)
-                                    },
-                                    onRequestLockScreen = {
-                                        try {
-                                            val intent = OemSettingsHelper.getOemSettingsIntent(context)
-                                            context.startActivity(intent)
-                                        } catch (e: Exception) {
-                                            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                                data = Uri.fromParts("package", context.packageName, null)
-                                            }
-                                            context.startActivity(intent)
-                                        }
-                                        lockScreenPermissionGranted = true
-                                    },
-                                    onRequestCamera = {
-                                        cameraLauncher.launch(Manifest.permission.CAMERA)
-                                    }
-                                )
-                                5 -> StepLanguage(
+                                4 -> StepLanguage(
                                     selectedLangCode = selectedLangCode,
                                     onLanguageSelect = { code ->
                                         coroutineScope.launch {
                                             app.userPreferences.updateSelectedLanguage(code)
                                         }
                                     }
+                                )
+                                5 -> StepTermsAndPrivacy(
+                                    agreed = legalAgreed,
+                                    onAgreedChecked = { legalAgreed = it }
                                 )
                                 6 -> StepGetStarted()
                             }
@@ -566,6 +499,13 @@ private fun StepPermissions(
             color = SubtitleGray
         )
 
+        Text(
+            text = Localizer.t("Without these permissions, the alarm may not ring reliably, or you might easily bypass the wake-up missions."),
+            fontSize = 11.sp,
+            color = OrangePrimary,
+            fontWeight = FontWeight.Medium
+        )
+
         Spacer(modifier = Modifier.height(8.dp))
 
         // Notification Permission Card
@@ -597,7 +537,7 @@ private fun StepPermissions(
                         color = DarkText
                     )
                     Text(
-                        text = if (notificationGranted) Localizer.t("Access Allowed") else Localizer.t("Required to trigger wake-up notifications"),
+                        text = if (notificationGranted) Localizer.t("Access Allowed") else Localizer.t("Required to trigger wake-up notifications. Without this, the app cannot show background alarm alerts or status bar indicators."),
                         fontSize = 11.sp,
                         color = SubtitleGray
                     )
@@ -653,7 +593,7 @@ private fun StepPermissions(
                         color = DarkText
                     )
                     Text(
-                        text = if (overlayGranted) Localizer.t("Access Allowed") else Localizer.t("Required to display overlays over other apps"),
+                        text = if (overlayGranted) Localizer.t("Access Allowed") else Localizer.t("Required to display overlays over other apps. This ensures the wake-up mission screen pops up immediately, preventing you from using other apps until dismissed."),
                         fontSize = 11.sp,
                         color = SubtitleGray
                     )
@@ -710,7 +650,7 @@ private fun StepPermissions(
                             color = DarkText
                         )
                         Text(
-                            text = if (lockScreenGranted) Localizer.t("Access Allowed") else Localizer.t("Required to display overlays on the lock screen"),
+                            text = if (lockScreenGranted) Localizer.t("Access Allowed") else Localizer.t("Required to display overlays on the lock screen. This ensures the alarm screen wakes up the device and prompts you to solve the mission directly on lock screen."),
                             fontSize = 11.sp,
                             color = SubtitleGray
                         )
@@ -767,7 +707,7 @@ private fun StepPermissions(
                         color = DarkText
                     )
                     Text(
-                        text = if (cameraGranted) Localizer.t("Access Allowed") else Localizer.t("Required for photo capture and scanning missions"),
+                        text = if (cameraGranted) Localizer.t("Access Allowed") else Localizer.t("Required for photo capture and scanning missions. This allows you to complete photo-based or barcode-scanning missions to silence the alarm."),
                         fontSize = 11.sp,
                         color = SubtitleGray
                     )
@@ -911,6 +851,84 @@ private fun StepGetStarted() {
             textAlign = TextAlign.Center,
             lineHeight = 20.sp
         )
+    }
+}
+
+@Composable
+private fun StepTermsAndPrivacy(
+    agreed: Boolean,
+    onAgreedChecked: (Boolean) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Text(
+            text = Localizer.t("Terms & Privacy Agreement"),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = DarkText
+        )
+
+        Text(
+            text = Localizer.t("Before using the app, please read and agree to our Terms of Service and Privacy Policy, and accept the consequences of missed alarms."),
+            fontSize = 12.sp,
+            color = SubtitleGray,
+            lineHeight = 18.sp
+        )
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = Localizer.t("App Uses & Rules Summary:"),
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = DarkText
+                )
+                Text(
+                    text = Localizer.t("• Local Data: Motion and Camera scans are processed locally on device; no personal details are uploaded."),
+                    fontSize = 12.sp,
+                    color = DarkText,
+                    lineHeight = 16.sp
+                )
+                Text(
+                    text = Localizer.t("• Disclaimer of Liability: The developer has no liability for any missed appointments, lost work, or flights due to missed alarms."),
+                    fontSize = 12.sp,
+                    color = DarkText,
+                    lineHeight = 16.sp
+                )
+            }
+        }
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onAgreedChecked(!agreed) }
+                .padding(vertical = 8.dp)
+        ) {
+            Checkbox(
+                checked = agreed,
+                onCheckedChange = { onAgreedChecked(it) },
+                colors = CheckboxDefaults.colors(checkedColor = OrangePrimary)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = Localizer.t("I agree to the Terms of Service and Privacy Policy, and accept all consequences of missed alarms."),
+                fontSize = 13.sp,
+                color = DarkText,
+                lineHeight = 18.sp
+            )
+        }
     }
 }
 

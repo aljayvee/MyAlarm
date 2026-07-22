@@ -23,6 +23,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.application.myalarm.mission.*
 import com.application.myalarm.util.Localizer
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.core.content.ContextCompat
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.ui.platform.LocalContext
 
 private val OrangePrimary = Color(0xFFFF8C00)
 private val OrangeLight = Color(0xFFFFF3E0)
@@ -43,7 +49,84 @@ fun MissionPickerScreen(
 
     var demoMission by remember { mutableStateOf<MissionType?>(null) }
 
+    val context = LocalContext.current
+    var showCameraPermissionDialog by remember { mutableStateOf(false) }
+    var pendingSelection by remember { mutableStateOf<MissionType?>(null) }
+    var pendingDemo by remember { mutableStateOf(false) }
+
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            pendingSelection?.let { mission ->
+                if (pendingDemo) {
+                    demoMission = mission
+                } else {
+                    viewModel.missionType = mission.name
+                    onBack()
+                }
+            }
+        }
+        pendingSelection = null
+        pendingDemo = false
+    }
+
+    fun checkCameraPermission(ctx: android.content.Context): Boolean {
+        return ContextCompat.checkSelfPermission(
+            ctx,
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
+        if (showCameraPermissionDialog) {
+            AlertDialog(
+                onDismissRequest = {
+                    showCameraPermissionDialog = false
+                    pendingSelection = null
+                    pendingDemo = false
+                },
+                title = {
+                    Text(
+                        text = Localizer.t("Camera Access Required"),
+                        fontWeight = FontWeight.Bold,
+                        color = DarkText
+                    )
+                },
+                text = {
+                    Text(
+                        text = Localizer.t("To utilize the selected mission, MyAlarm needs access to your camera. The camera is only used to scan barcodes/QR codes or verify image-based wake-up checks. Real-time processing is done entirely on your device, and no photos or videos are ever saved or shared."),
+                        color = DarkText,
+                        fontSize = 14.sp
+                    )
+                },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            showCameraPermissionDialog = false
+                            cameraLauncher.launch(Manifest.permission.CAMERA)
+                        },
+                        colors = ButtonDefaults.textButtonColors(contentColor = OrangePrimary)
+                    ) {
+                        Text(Localizer.t("Grant"))
+                    }
+                },
+                dismissButton = {
+                    TextButton(
+                        onClick = {
+                            showCameraPermissionDialog = false
+                            pendingSelection = null
+                            pendingDemo = false
+                        },
+                        colors = ButtonDefaults.textButtonColors(contentColor = DarkText)
+                    ) {
+                        Text(Localizer.t("Cancel"))
+                    }
+                },
+                containerColor = Color.White,
+                shape = RoundedCornerShape(20.dp)
+            )
+        }
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -87,11 +170,29 @@ fun MissionPickerScreen(
                         mission = mission,
                         isSelected = viewModel.missionType == mission.name,
                         onClick = {
-                            viewModel.missionType = mission.name
-                            onBack()
+                            val requiresCamera = mission == MissionType.SKY_PHOTO || 
+                                                 mission == MissionType.BARCODE || 
+                                                 mission == MissionType.QR_CODE
+                            if (requiresCamera && !checkCameraPermission(context)) {
+                                pendingSelection = mission
+                                pendingDemo = false
+                                showCameraPermissionDialog = true
+                            } else {
+                                viewModel.missionType = mission.name
+                                onBack()
+                            }
                         },
                         onDemoClick = {
-                            demoMission = mission
+                            val requiresCamera = mission == MissionType.SKY_PHOTO || 
+                                                 mission == MissionType.BARCODE || 
+                                                 mission == MissionType.QR_CODE
+                            if (requiresCamera && !checkCameraPermission(context)) {
+                                pendingSelection = mission
+                                pendingDemo = true
+                                showCameraPermissionDialog = true
+                            } else {
+                                demoMission = mission
+                            }
                         }
                     )
                 }
@@ -105,11 +206,29 @@ fun MissionPickerScreen(
                         mission = mission,
                         isSelected = viewModel.missionType == mission.name,
                         onClick = {
-                            viewModel.missionType = mission.name
-                            onBack()
+                            val requiresCamera = mission == MissionType.SKY_PHOTO || 
+                                                 mission == MissionType.BARCODE || 
+                                                 mission == MissionType.QR_CODE
+                            if (requiresCamera && !checkCameraPermission(context)) {
+                                pendingSelection = mission
+                                pendingDemo = false
+                                showCameraPermissionDialog = true
+                            } else {
+                                viewModel.missionType = mission.name
+                                onBack()
+                            }
                         },
                         onDemoClick = {
-                            demoMission = mission
+                            val requiresCamera = mission == MissionType.SKY_PHOTO || 
+                                                 mission == MissionType.BARCODE || 
+                                                 mission == MissionType.QR_CODE
+                            if (requiresCamera && !checkCameraPermission(context)) {
+                                pendingSelection = mission
+                                pendingDemo = true
+                                showCameraPermissionDialog = true
+                            } else {
+                                demoMission = mission
+                            }
                         }
                     )
                 }

@@ -1,0 +1,44 @@
+MYALARM TERMS OF SERVICE & PRIVACY POLICY COPYWRITING OPTIMIZATIONS LOG
+========================================================================
+
+This document records the copy refinements to the application's Terms of Service and Privacy Policy to make them exceptionally clear and easy to understand for the end-user.
+
+--------------------------------------------------------------------------------
+1. OPTIMIZATION COPYWRITING ANALYSIS
+--------------------------------------------------------------------------------
+The original legal screens contained formal, dense, and all-caps legal jargon which is difficult for users to scan and comprehend. The copy was refined using the following principles:
+1. Bullet points and short paragraphs to break up text walls.
+2. Bold formatting for critical notices (like battery limits and local-only data processing).
+3. Plain-spoken developer language explaining *why* permissions are requested and *what* limitations exist.
+
+--------------------------------------------------------------------------------
+2. REFINED COPY DETAILS
+--------------------------------------------------------------------------------
+
+### Terms of Service Improvements:
+- **1. Welcome & Agreement**: Summarized user agreement in one simple sentence.
+- **2. Disclaimer (Missed Alarms)**: Replaced standard all-caps warranties disclaimer with a plain explanation that Android battery optimizations and background task limits mean we cannot guarantee 100% alarm reliability, asking users to configure autostart/notifications/battery settings correctly.
+- **3. Limitation of Liability**: Explained in simple words that we are not responsible for missed appointments, lateness to work, or flight cancellations.
+- **4. Wake-Up Missions**: Noted that wake-up missions (Math, Shaking, Typing, etc.) are built to help get users out of bed, and trying to bypass them is at their own risk.
+- **5. Ownership**: Clarified that code and custom graphics belong to the app, and open-source libraries belong to their respective creators under their own licenses.
+
+### Privacy Policy Improvements:
+- **1. 100% Local Processing**: Highlighted that we do not gather, store, or transmit personal data to remote servers. Explained exactly what happens on the device:
+  * *Camera*: Image processing for QR/barcode or photo verification runs 100% locally. No photos or videos are ever saved, stored, or sent.
+  * *Sensors*: Step-counting and shake detection data are processed in real-time locally and never saved.
+  * *Settings & History*: Saved securely in the device's sandbox Room DB and completely deleted on app uninstall.
+- **2. Network and Internet Use**: Expressly declared that network access is only used to check for software updates. No tracking, location collection, telemetry, or advertisements are used.
+- **3. Third-Party Services**: Noted that Android CameraX and Google ML Kit run entirely on the device.
+
+--------------------------------------------------------------------------------
+3. BUILD & COMPILED VERIFICATION
+--------------------------------------------------------------------------------
+- Unit Tests: Executed all project unit tests successfully:
+  Command run: .\gradlew.bat testDebugUnitTest
+  Result: BUILD SUCCESSFUL (all test suites passed).
+- Build & Installation: Compiled, packaged, and installed the debug APK to the connected device:
+  Command run: .\gradlew.bat installDebug
+  Result: BUILD SUCCESSFUL (installed on 1 device).
+- Launch Application: Launched the debug application successfully on the connected Tecno phone:
+  Command run: adb shell am start -n com.application.myalarm.dev/com.application.myalarm.MainActivity
+  Result: Starting Intent (successfully launched).
