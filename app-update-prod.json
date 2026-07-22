@@ -1,7 +1,7 @@
 {
-  "latestVersionCode": 15,
-  "latestVersionName": "2.7.1.3",
-  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.7.1.3-prod/alarm-prod.apk",
+  "latestVersionCode": 16,
+  "latestVersionName": "2.7.2.5",
+  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.7.2.5-prod/alarm-prod.apk",
   "forceUpdate": true,
-  "releaseNotes": "Changes Made:\n\n- Fixes Bugs\n\n- Improved Security"
+  "releaseNotes": "Changes Made:\n\n- Fixed an issue where the hardcoded version are not dynamically changing.\n\n- Improved Performance in the Display over the app."
 }
