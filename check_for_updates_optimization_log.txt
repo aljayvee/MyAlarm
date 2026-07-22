@@ -1,0 +1,66 @@
+MYALARM CHECK FOR UPDATES OPTIMIZATION LOG
+=========================================
+
+This document logs the implementation details, simulated states, and navigation of the new "Check for Updates" feature in MyAlarm.
+
+--------------------------------------------------------------------------------
+1. FEATURES IMPLEMENTED
+--------------------------------------------------------------------------------
+1. **New Screen (`UpdateScreen.kt`)**:
+   - Created a standalone screen mapping to route `"update"`.
+   - Hidden navigation bar: This screen does not display the bottom pill navigation dock, giving full focus to the update progress details.
+   - Customized back navigation to return cleanly to Settings.
+
+2. **Pull-to-Refresh Gesture**:
+   - Wrapped the screen layout inside Compose's standard `PullToRefreshBox`.
+   - Swiping down triggers a simulated 1.5-second network request delay.
+   - If a background update is available, it pops open a modal AlertDialog displaying release details.
+
+3. **Premium Horizontal App Info Card (Huawei AI Life Style)**:
+   - Compact normal height horizontal row card instead of vertical stacks.
+   - Left: Logo representation (64.dp rounded box, gradient theme with centered Alarm icon).
+   - Center: App details (Name: "MyAlarm" in bold 18.sp, Version: "Version 1.0.0 → 1.1.0" in subtitle gray) and a compact `LinearProgressIndicator` (6.dp height) displaying status and percentage fill-up text when downloading or paused.
+   - Right: Integrated compact Action Button (Pause, Resume, or Install) inside the card row.
+   - **Conditional Visibility**: The horizontal progress card ONLY appears when the update is active (state is DOWNLOADING, PAUSED, or DOWNLOADED). When the state is IDLE, the card is hidden to keep the UI clean.
+
+4. **IDLE State Presentation**:
+   - When the update is not yet active (state is IDLE), the screen shows a premium centered layout with the app logo, app name, version details, the "What's New" release notes card, and a large **"Download Update"** button at the bottom of the screen.
+   - Clicking **"Download Update"** starts the download simulation, hiding the IDLE logo/button and displaying the horizontal downloading card.
+
+5. **APK Signature & Package Verification**:
+   - Added validation inside `AppUpdateChecker.verifyAndInstallApk` to verify the downloaded APK file's integrity and authenticity.
+   - **Package Name Matching**: Extracts the package name of the downloaded APK and compares it to the currently running app package name.
+   - **Signature Verification**: Extracts the signing signatures/certificates of the downloaded APK (using API 28 `signingInfo` history or deprecated signature arrays on older versions) and validates that it matches the currently installed application's signing keys before initiating installation.
+   - Blocks `startActivity(intent)` and returns `false` if either check fails, mitigating compromised server / modified APK attacks.
+
+6. **Background Alert Reminders (Red Dot Badge)**:
+   - Added an `updateAvailableInBackground` mutable state in `AppUpdateChecker`.
+   - On Settings Screen: If an update is detected in the background, a small red dot badge appears on the right edge of the "Check for Updates" row icon and next to the section title text. The description text turns orange: "New update is available!".
+
+7. **Pause & Resume Controls**:
+   - Simulates download byte increments (5% every 300ms).
+   - "Pause" button halts progress and changes downloadState to `PAUSED`.
+   - "Resume" starts increment loops from the current progress level and changes downloadState to `DOWNLOADING`.
+
+8. **Simulated Installation Dialog**:
+   - Once progress reaches 100%, the downloadState transitions to `DOWNLOADED` and a green "Install" button appears inside the card row.
+   - Clicking "Install" checks if the real downloaded `update.apk` file exists. If present, it executes the signature verification and installer launcher. If it is a simulator click (file absent), it logs the check bypass and launches the success dialog.
+   - Confirming resets background states and returns to Settings.
+
+--------------------------------------------------------------------------------
+2. TECHNICAL DETAILS
+--------------------------------------------------------------------------------
+- **AppUpdateChecker.kt**:
+  * Added `updateAvailableInBackground` state.
+  * Added `DownloadState` enum (`IDLE`, `DOWNLOADING`, `PAUSED`, `DOWNLOADED`).
+  * Added `downloadState` and `downloadProgress` states.
+  * Added `startSimulationDownload`, `pauseSimulationDownload`, `resumeSimulationDownload`, and `resetSimulation` helpers.
+  * Added `verifyAndInstallApk(Context, File)` with custom package matching, multi-API level signature list checks, and package installer action view triggers.
+
+- **SettingsScreen.kt**:
+  * Removed legacy dialog handlers and state variables.
+  * Observed `AppUpdateChecker.updateAvailableInBackground` to display red badges and prompt navigation `onNavigate("update")`.
+
+- **AppNavigation.kt**:
+  * Added the `"update"` screen to routing dispatch matches.
+  * Cleaned up legacy launch update alert popup dialog codes to favor Settings badge notifications.
