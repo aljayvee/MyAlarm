@@ -59,44 +59,8 @@ fun OnboardingScreen(
     val coroutineScope = rememberCoroutineScope()
 
     var currentStep by remember { mutableStateOf(1) }
-    val totalSteps = 7
+    val totalSteps = 6
     var legalAgreed by remember { mutableStateOf(false) }
-
-    // Permissions State
-    val isOemDevice = remember { OemSettingsHelper.isOemDevice() }
-
-    var notificationPermissionGranted by remember { mutableStateOf(checkNotificationPermission(context)) }
-    var overlayPermissionGranted by remember { mutableStateOf(Settings.canDrawOverlays(context)) }
-    var lockScreenPermissionGranted by remember { mutableStateOf(!isOemDevice) }
-    var cameraPermissionGranted by remember { mutableStateOf(checkCameraPermission(context)) }
-
-    val notificationLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        notificationPermissionGranted = isGranted
-    }
-
-    val cameraLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        cameraPermissionGranted = isGranted
-    }
-
-    // Lifecycle observer to re-check permissions when returning from Settings screen
-    val lifecycleOwner = LocalLifecycleOwner.current
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                notificationPermissionGranted = checkNotificationPermission(context)
-                overlayPermissionGranted = Settings.canDrawOverlays(context)
-                cameraPermissionGranted = checkCameraPermission(context)
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-        }
-    }
 
     // Language state
     var selectedLangCode by remember { mutableStateOf("en") }
@@ -112,11 +76,10 @@ fun OnboardingScreen(
     var struggleReason by remember { mutableStateOf("") }
     var preferredChallenge by remember { mutableStateOf("") }
 
-    val isNextEnabled = remember(currentStep, struggleReason, preferredChallenge, notificationPermissionGranted, overlayPermissionGranted, lockScreenPermissionGranted, cameraPermissionGranted, legalAgreed) {
+    val isNextEnabled = remember(currentStep, struggleReason, preferredChallenge, legalAgreed) {
         when (currentStep) {
             3 -> struggleReason.isNotEmpty() && preferredChallenge.isNotEmpty()
-            4 -> notificationPermissionGranted && overlayPermissionGranted && cameraPermissionGranted && lockScreenPermissionGranted
-            6 -> legalAgreed
+            5 -> legalAgreed
             else -> true
         }
     }
@@ -207,43 +170,7 @@ fun OnboardingScreen(
                                     preferredChallenge = preferredChallenge,
                                     onPreferredChallengeSelect = { preferredChallenge = it }
                                 )
-                                4 -> StepPermissions(
-                                    notificationGranted = notificationPermissionGranted,
-                                    overlayGranted = overlayPermissionGranted,
-                                    lockScreenGranted = lockScreenPermissionGranted,
-                                    cameraGranted = cameraPermissionGranted,
-                                    isOemDevice = isOemDevice,
-                                    onRequestNotification = {
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                            notificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                                        } else {
-                                            notificationPermissionGranted = true
-                                        }
-                                    },
-                                    onRequestOverlay = {
-                                        val intent = Intent(
-                                            Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                                            Uri.parse("package:${context.packageName}")
-                                        )
-                                        context.startActivity(intent)
-                                    },
-                                    onRequestLockScreen = {
-                                        try {
-                                            val intent = OemSettingsHelper.getOemSettingsIntent(context)
-                                            context.startActivity(intent)
-                                        } catch (e: Exception) {
-                                            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                                data = Uri.fromParts("package", context.packageName, null)
-                                            }
-                                            context.startActivity(intent)
-                                        }
-                                        lockScreenPermissionGranted = true
-                                    },
-                                    onRequestCamera = {
-                                        cameraLauncher.launch(Manifest.permission.CAMERA)
-                                    }
-                                )
-                                5 -> StepLanguage(
+                                4 -> StepLanguage(
                                     selectedLangCode = selectedLangCode,
                                     onLanguageSelect = { code ->
                                         coroutineScope.launch {
@@ -251,11 +178,11 @@ fun OnboardingScreen(
                                         }
                                     }
                                 )
-                                6 -> StepTermsAndPrivacy(
+                                5 -> StepTermsAndPrivacy(
                                     agreed = legalAgreed,
                                     onAgreedChecked = { legalAgreed = it }
                                 )
-                                7 -> StepGetStarted()
+                                6 -> StepGetStarted()
                             }
                         }
                     }

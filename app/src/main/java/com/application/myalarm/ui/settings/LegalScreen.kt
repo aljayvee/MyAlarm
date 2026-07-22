@@ -99,35 +99,36 @@ private fun TermsOfServiceContent() {
             color = DarkText
         )
         Text(
-            text = "Last updated: June 20, 2026",
+            text = "Last updated: July 5, 2026",
             fontSize = 12.sp,
             color = SubtitleGray
         )
         HorizontalDivider(color = Color(0xFFF0F0F0))
 
         LegalSection(
-            title = "1. Acceptance of Terms",
-            body = "By downloading, installing, or using this application (the \"Service\"), you agree to be bound by these Terms of Service. If you do not agree to these terms, you must not install or use the Service."
+            title = "1. Welcome & Agreement",
+            body = "By downloading, installing, or using MyAlarm, you agree to these Terms of Service. If you do not agree, please uninstall and do not use the app."
         )
 
         LegalSection(
-            title = "2. Disclaimer of Warranties",
-            body = "THE SERVICE IS PROVIDED ON AN \"AS IS\" AND \"AS AVAILABLE\" BASIS. THE DEVELOPER DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, REGARDING THE RELIABILITY, TIMELINESS, OR ACCURACY OF THE ALARMS.\n\nBECAUSE MOBILE OPERATING SYSTEMS MAY RESTRICT BACKGROUND TASKS, ENFORCE AGGRESSIVE BATTERY OPTIMIZATIONS, OR ENCOUNTER SYSTEM INTERRUPTIONS, WE CANNOT GUARANTEE THAT ALARMS WILL TRIGGER UNDER ALL CIRCUMSTANCES. IT IS YOUR RESPONSIBILITY TO ENSURE YOUR DEVICE PERMISSIONS (SUCH AS AUTOSTART, NOTIFICATIONS, AND LOCK SCREEN OVERLAYS) ARE PROPERLY CONFIGURED."
+            title = "2. Disclaimer: We Do Our Best, But...",
+            body = "Our goal is to wake you up on time! However, because Android devices enforce aggressive battery saving, autostart blocks, and background limits, we cannot guarantee that alarms will sound in 100% of situations.\n\n" +
+                    "It is your responsibility to configure your device correctly. Please check that MyAlarm has permissions for Autostart, Notifications, and Displaying Over Other Apps, and ensure it is excluded from battery optimizations."
         )
 
         LegalSection(
             title = "3. Limitation of Liability",
-            body = "IN NO EVENT SHALL THE DEVELOPER OR CONTRIBUTORS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOST TIME, APPOINTMENTS, INCOME, TRAVEL ARRANGEMENTS, OR OTHER OBLIGATIONS, ARISING OUT OF OR IN CONNECTION WITH THE FAILURE OF THE APP TO SOUND OR DISPLAY AN ALARM, SYSTEM OVERWRITES, OR CUSTOM USER SETTINGS."
+            body = "We want you to succeed, but we cannot be held responsible for any consequences of a missed alarm (such as being late to work, missing appointments, missing flights, or any lost income)."
         )
 
         LegalSection(
-            title = "4. User Conduct & Missions",
-            body = "The Service incorporates interactive wake-up missions (Math, Shaking, Camera Scanning, etc.) designed to prevent oversleeping. Users agree to utilize these features as designed. Circumventing or disabling these missions is at the user's own risk."
+            title = "4. Wake-Up Missions",
+            body = "Our wake-up missions (Math, Shaking, Typing, etc.) are built to help you get out of bed. Attempting to bypass, hack, or disable these missions is at your own risk."
         )
 
         LegalSection(
-            title = "5. Intellectual Property",
-            body = "This app is an independent development. All custom logos, graphics, and code created for this application belong to the developer. All references to other third-party libraries (CameraX, ML Kit, Room) are governed by their respective open-source licenses."
+            title = "5. Ownership",
+            body = "All app code, designs, and logos belong to us. Any third-party open-source libraries used in the app belong to their respective developers and are governed by their own licenses."
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -144,33 +145,33 @@ private fun PrivacyPolicyContent() {
             color = DarkText
         )
         Text(
-            text = "Last updated: June 20, 2026",
+            text = "Last updated: July 5, 2026",
             fontSize = 12.sp,
             color = SubtitleGray
         )
         HorizontalDivider(color = Color(0xFFF0F0F0))
 
         LegalSection(
-            title = "1. Information We Process Locally",
-            body = "Our application is designed with user privacy as our highest priority. All features and permissions process data locally on your device. We do not transmit or share any personal data with remote servers.\n\n" +
-                    "• Camera Data: The camera permission is used solely to verify active missions (scanning QR codes/barcodes or taking specific object photos). Real-time image processing is executed entirely on-device using local machine learning APIs. No images or videos are saved, stored, or sent over the network.\n\n" +
-                    "• Motion & Sensor Data: Accelerometer and step count sensors are processed locally on the device to count steps or detect shaking to turn off active alarms. This data is processed dynamically and is not saved.\n\n" +
-                    "• Database Records: Alarm schedules, labels, settings, and mission success histories are saved securely in your device's private sandbox storage (Room DB and DataStore). This data is completely deleted when the app is uninstalled."
+            title = "1. 100% Local Processing (Your Data Stays on Your Device)",
+            body = "Your privacy is our top priority. We do not gather, store, or transmit your personal data to remote servers. Everything happens locally on your phone:\n\n" +
+                    "• Camera: The camera permission is only used to scan barcodes/QR codes or take pictures for active missions. Image verification runs completely on-device. We never save, store, or share your photos or videos.\n\n" +
+                    "• Sensors: Accelerometer and step-counter data are processed in real-time to detect steps or shaking to turn off alarms. This data is never saved or shared.\n\n" +
+                    "• Settings & History: Alarm schedules, preferences, and completion histories are stored securely in your device's private sandbox database (Room DB). They are completely deleted if you uninstall the app."
         )
 
         LegalSection(
-            title = "2. Network Permissions",
-            body = "Our app requests network access solely to perform background queries checking for software updates from our official updates repository. We do not gather analytics, track locations, or deploy user telemetry identifiers."
+            title = "2. Network and Internet Use",
+            body = "We only use the network connection to check for software updates from our official repository. We do not show ads, run analytics, track your location, or collect telemetry data."
         )
 
         LegalSection(
-            title = "3. Third-Party Libraries",
-            body = "The app utilizes standard Android dependencies, including Google ML Kit and CameraX APIs. These tools run locally and conform to standard Android privacy declarations."
+            title = "3. Third-Party Services",
+            body = "We use Android CameraX and Google ML Kit to process camera images for missions. These tools execute entirely on your device and follow standard Android privacy rules."
         )
 
         LegalSection(
-            title = "4. Changes to This Policy",
-            body = "We may update this Privacy Policy from time to time. Any updates will be displayed inside the application settings panel."
+            title = "4. Policy Updates",
+            body = "We may update this policy occasionally. Any updates will be displayed inside this settings panel."
         )
 
         Spacer(modifier = Modifier.height(8.dp))

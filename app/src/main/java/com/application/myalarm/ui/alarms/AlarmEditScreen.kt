@@ -38,6 +38,16 @@ import androidx.core.content.ContextCompat
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import java.util.concurrent.Executors
+import com.application.myalarm.AlarmApplication
+import com.application.myalarm.util.OemSettingsHelper
+import android.content.Intent
+import android.provider.Settings
+import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.launch
+import android.Manifest
+import android.os.Build
+import android.content.pm.PackageManager
+import com.application.myalarm.util.Localizer
 
 private val OrangePrimary = Color(0xFFFF8C00)
 private val OrangeAccent = Color(0xFFFFA726)
@@ -58,6 +68,188 @@ fun AlarmEditScreen(
 ) {
     var isTimePickerVisible by remember { mutableStateOf(false) }
     var isCodeScannerVisible by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+    val app = context.applicationContext as AlarmApplication
+    val userPrefs = app.userPreferences
+    val lockScreenPermissionAsked by userPrefs.lockScreenPermissionAsked.collectAsState(initial = false)
+    val isOemDevice = remember { OemSettingsHelper.isOemDevice() }
+    val scope = rememberCoroutineScope()
+    var showLockScreenDialog by remember { mutableStateOf(false) }
+
+    fun checkNotificationPermission(ctx: android.content.Context): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(
+                ctx,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+    }
+
+    fun checkCameraPermission(ctx: android.content.Context): Boolean {
+        return ContextCompat.checkSelfPermission(
+            ctx,
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    var showNotifRequiredDialog by remember { mutableStateOf(false) }
+    var showCameraRequiredDialog by remember { mutableStateOf(false) }
+
+    if (showNotifRequiredDialog) {
+        AlertDialog(
+            onDismissRequest = { showNotifRequiredDialog = false },
+            title = {
+                Text(
+                    text = com.application.myalarm.util.Localizer.t("Notification Permission Required"),
+                    fontWeight = FontWeight.Bold,
+                    color = DarkText
+                )
+            },
+            text = {
+                Text(
+                    text = com.application.myalarm.util.Localizer.t("To run alarms properly, notification access is essential. Please enable it in Settings so MyAlarm can ring."),
+                    color = DarkText,
+                    fontSize = 14.sp
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showNotifRequiredDialog = false
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                            data = Uri.parse("package:${context.packageName}")
+                        }
+                        context.startActivity(intent)
+                    },
+                    colors = ButtonDefaults.textButtonColors(contentColor = OrangePrimary)
+                ) {
+                    Text(com.application.myalarm.util.Localizer.t("Open Settings"))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showNotifRequiredDialog = false },
+                    colors = ButtonDefaults.textButtonColors(contentColor = DarkText)
+                ) {
+                    Text(com.application.myalarm.util.Localizer.t("Cancel"))
+                }
+            },
+            containerColor = Color.White,
+            shape = RoundedCornerShape(20.dp)
+        )
+    }
+
+    if (showCameraRequiredDialog) {
+        AlertDialog(
+            onDismissRequest = { showCameraRequiredDialog = false },
+            title = {
+                Text(
+                    text = com.application.myalarm.util.Localizer.t("Camera Permission Required"),
+                    fontWeight = FontWeight.Bold,
+                    color = DarkText
+                )
+            },
+            text = {
+                Text(
+                    text = com.application.myalarm.util.Localizer.t("The selected mission requires camera access to be utilized. Please grant camera permission or select a different mission."),
+                    color = DarkText,
+                    fontSize = 14.sp
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showCameraRequiredDialog = false
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                            data = Uri.parse("package:${context.packageName}")
+                        }
+                        context.startActivity(intent)
+                    },
+                    colors = ButtonDefaults.textButtonColors(contentColor = OrangePrimary)
+                ) {
+                    Text(com.application.myalarm.util.Localizer.t("Open Settings"))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showCameraRequiredDialog = false },
+                    colors = ButtonDefaults.textButtonColors(contentColor = DarkText)
+                ) {
+                    Text(com.application.myalarm.util.Localizer.t("Cancel"))
+                }
+            },
+            containerColor = Color.White,
+            shape = RoundedCornerShape(20.dp)
+        )
+    }
+
+    if (showLockScreenDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                showLockScreenDialog = false
+                scope.launch {
+                    userPrefs.setLockScreenPermissionAsked(true)
+                    viewModel.saveAlarm(onComplete = onBack)
+                }
+            },
+            title = {
+                Text(
+                    text = com.application.myalarm.util.Localizer.t("Show on Lock Screen"),
+                    fontWeight = FontWeight.Bold,
+                    color = DarkText
+                )
+            },
+            text = {
+                Text(
+                    text = com.application.myalarm.util.Localizer.t("To make sure your alarms ring even when your screen is locked, we need you to enable the 'Show on Lock Screen' or 'Autostart' setting on the next screen. Please find MyAlarm in the list and enable it."),
+                    color = DarkText,
+                    fontSize = 14.sp
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showLockScreenDialog = false
+                        scope.launch {
+                            userPrefs.setLockScreenPermissionAsked(true)
+                            try {
+                                val intent = OemSettingsHelper.getOemSettingsIntent(context)
+                                context.startActivity(intent)
+                            } catch (e: Exception) {
+                                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                    data = Uri.parse("package:${context.packageName}")
+                                }
+                                context.startActivity(intent)
+                            }
+                            viewModel.saveAlarm(onComplete = onBack)
+                        }
+                    },
+                    colors = ButtonDefaults.textButtonColors(contentColor = OrangePrimary)
+                ) {
+                    Text(com.application.myalarm.util.Localizer.t("Settings"))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        showLockScreenDialog = false
+                        scope.launch {
+                            userPrefs.setLockScreenPermissionAsked(true)
+                            viewModel.saveAlarm(onComplete = onBack)
+                        }
+                    },
+                    colors = ButtonDefaults.textButtonColors(contentColor = DarkText)
+                ) {
+                    Text(com.application.myalarm.util.Localizer.t("Skip"))
+                }
+            },
+            containerColor = Color.White,
+            shape = RoundedCornerShape(20.dp)
+        )
+    }
 
     LaunchedEffect(alarmId) {
         viewModel.loadAlarm(alarmId)
@@ -142,7 +334,21 @@ fun AlarmEditScreen(
                         fontSize = 16.sp,
                         modifier = Modifier
                             .clickable {
-                                viewModel.saveAlarm(onComplete = onBack)
+                                val requiresCamera = viewModel.missionType == "SKY_PHOTO" || 
+                                                     viewModel.missionType == "BARCODE" || 
+                                                     viewModel.missionType == "QR_CODE"
+                                val hasCamera = checkCameraPermission(context)
+                                val hasNotif = checkNotificationPermission(context)
+                                
+                                if (!hasNotif) {
+                                    showNotifRequiredDialog = true
+                                } else if (requiresCamera && !hasCamera) {
+                                    showCameraRequiredDialog = true
+                                } else if (isOemDevice && !lockScreenPermissionAsked) {
+                                    showLockScreenDialog = true
+                                } else {
+                                    viewModel.saveAlarm(onComplete = onBack)
+                                }
                             }
                             .padding(end = 16.dp)
                     )
@@ -276,7 +482,7 @@ fun AlarmEditScreen(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 20.dp)
+                    .padding(bottom = 8.dp)
                     .clickable { onNavigate("mission_picker") },
                 shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.cardColors(containerColor = CardWhite),
@@ -336,6 +542,34 @@ fun AlarmEditScreen(
                         tint = SubtitleGray
                     )
                 }
+            }
+
+            val missionRequiresCamera = viewModel.missionType == "SKY_PHOTO" || 
+                                         viewModel.missionType == "BARCODE" || 
+                                         viewModel.missionType == "QR_CODE"
+            if (missionRequiresCamera && !checkCameraPermission(context)) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp, start = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Warning,
+                        contentDescription = "Warning",
+                        tint = Color(0xFFD32F2F),
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        text = Localizer.t("Camera permission is disabled. This is essential to utilize this mission."),
+                        color = Color(0xFFD32F2F),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+            } else {
+                Spacer(modifier = Modifier.height(12.dp))
             }
 
             if (viewModel.missionType == "QR_CODE" || viewModel.missionType == "BARCODE") {
