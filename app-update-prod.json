@@ -1,7 +1,7 @@
 {
-  "latestVersionCode": 19,
-  "latestVersionName": "2.8.4.10",
-  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.8.4.10-prod/alarm-prod.apk",
+  "latestVersionCode": 20,
+  "latestVersionName": "2.8.5.10",
+  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.8.5.10-prod/alarm-prod.apk",
   "forceUpdate": false,
   "releaseNotes": "BIG MAJOR UPDATES FOR THE NEW VERSION\n\nWARNING: THIS MAJOR UPDATES DOES NOT SUPPORT THE CURRENT VERSION OF THE APP. IF YOU WANT THE LATEST VERSION, DOWNLOAD IT. \n\nChanges:\n1. The app has a brand new name from 'Alarm' to 'Riser'.\n2. Terms and Privacy Agreements has been updated.\n3. Permission changed from Display over layout to Alarm and Reminders.\n4. Improved the overall performance of the app.\n5. [NEW] Snooze Analytics features the average number of snooze within time in record.\n6. [NEW] Added Snooze button in the missions.\n7. [NEW] Added Dismiss button to stop the alarm.\n\n More Changes:\nWe improve the apps stability and performance in a new next-level providing seamless experience to the new and existing users of the app. Moreover, this app is free and does not require any payments."
 }
