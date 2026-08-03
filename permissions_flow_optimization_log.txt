@@ -1,0 +1,79 @@
+MYALARM CONTEXTUAL GRACEFUL PERMISSIONS & LAYOUT LOG
+======================================================
+
+This document logs the implementation details, UI/UX rationale, and verification for the contextual permissions flow update, layout spacing fixes, and permission cancellation improvements.
+
+--------------------------------------------------------------------------------
+1. CORE OPTIMIZATION SPECIFICATION & RATIONALE
+--------------------------------------------------------------------------------
+Previously, MyAlarm requested Notification, Draw Over Other Apps, Lock Screen, and Camera permissions in a single cluster during the onboarding flow. This caused cognitive overload and lacked clear context.
+To make the user experience premium and intuitive (graceful interactions), we refactored the permission requests to trigger contextually:
+1. Notification Permission: Access only when onboarding is finished (upon entering the main screen).
+2. Draw Over Other Apps: Access only when the user creates a new alarm and no alarms exist in the database (first created alarm).
+3. Show on Lock Screen: Access only when saving an alarm on OEM devices (Xiaomi, Tecno, Samsung, etc.).
+4. Camera Access Permission: Access only when selecting or demoing a camera-based mission (Sky Photo, Barcode, QR Code).
+
+Crucially, each request displays a clear, custom AlertDialog explaining *why* the permission is needed before calling the system prompt or settings intent.
+
+--------------------------------------------------------------------------------
+2. FIXES IN GRANTING & CANCELLING PERMISSIONS
+--------------------------------------------------------------------------------
+- Issue: Cancelling the permission dialog (Draw Over Other Apps) when creating a new alarm would still proceed to the create/edit alarm screen (`onNavigate("alarm_edit/-1")`).
+- Fix: Modified the "Display Over Other Apps" permission dialog dismissal handlers in `AlarmsScreen.kt`. If the user clicks "Cancel" or dismisses the dialog by clicking outside:
+  * We now only dismiss the dialog (`showOverlayPermissionDialog = false`).
+  * We DO NOT trigger `onNavigate("alarm_edit/-1")`, leaving the user safely on the main alarms list screen.
+  * The user can only proceed to create an alarm once the permission is granted (clicking "Grant" starts settings and navigates to the edit screen).
+
+--------------------------------------------------------------------------------
+3. MINOR UI FIXES: OVERSHADOWING & OVERLAPS
+--------------------------------------------------------------------------------
+- Issue: Since bottom padding was removed in the Scaffold innerPadding (to enable edge-to-edge transparency under the floating navigation bar), the "+ New alarm" button at the bottom of the AlarmsScreen was overlap-drawing directly behind or underneath the floating navigation dock.
+- Fixes:
+  1. Spacing Adjustment: Changed the padding on the "+ New alarm" button container to:
+     `.padding(start = 20.dp, end = 20.dp, bottom = 92.dp, top = 20.dp)`
+     This floats the "+ New alarm" button exactly 8.dp above the floating navigation dock, preventing any overlaps or clicks interference.
+  2. List Spacer Adjustment: Increased the bottom spacer height inside the AlarmsScreen LazyColumn from `100.dp` to `160.dp`. This guarantees that the user can scroll all alarm cards fully clear of both the "+ New alarm" button and the floating navigation dock.
+
+--------------------------------------------------------------------------------
+4. TECHNICAL DETAILS
+--------------------------------------------------------------------------------
+
+- OnboardingScreen.kt:
+  * Removed StepPermissions (Step index 4) from the onboarding sequence.
+  * Reduced `totalSteps` from 7 to 6.
+  * Re-indexed the remaining steps (Language becomes step 4, Terms & Privacy step 5, Get Started step 6).
+  * Removed local launchers and lifecycle observers that were previously bound to onboarding.
+
+- UserPreferences.kt:
+  * Added `LOCK_SCREEN_PERMISSION_ASKED` datastore key and getter/setter functions to ensure the OEM settings screen is only popped up once upon save.
+
+- AppNavigation.kt:
+  * Added `notificationLauncher` and `checkNotificationPermission` helper.
+  * Added `showNotificationPermissionDialog` dialog state.
+  * When `onboardingCompleted` turns true, if the permission is not granted, displays the explanatory AlertDialog. Confirming launches the standard Android notification permission prompt.
+
+- AlarmsScreen.kt:
+  * Intercepted "+ New alarm" button click.
+  * If `alarms.isEmpty()` and overlay permission is not granted, displays the explanatory AlertDialog. Confirming launches the system ACTION_MANAGE_OVERLAY_PERMISSION intent.
+
+- AlarmEditScreen.kt:
+  * Collected `lockScreenPermissionAsked` from `UserPreferences`.
+  * Checked if the device is an OEM device (`OemSettingsHelper.isOemDevice()`).
+  * Intercepted the "Save" action click. If OEM device and not asked before, displays the explanatory AlertDialog.
+  * Clicking "Settings" launches `OemSettingsHelper.getOemSettingsIntent(context)`. Regardless of the outcome (Settings, Skip, or Dismiss), the state `lockScreenPermissionAsked` is set to true, the alarm is saved, and the flow proceeds gracefully without blocking the user.
+
+- MissionPickerScreen.kt:
+  * Added `cameraLauncher` and `checkCameraPermission` helper.
+  * Added `showCameraPermissionDialog` dialog state, `pendingSelection` and `pendingDemo` variables.
+  * Intercepted click and demo-click for `SKY_PHOTO`, `BARCODE`, and `QR_CODE` missions.
+  * If camera permission is not granted, displays the explanatory AlertDialog. Confirming launches the system camera permission request. If granted, selection/demo proceeds.
+
+--------------------------------------------------------------------------------
+5. BUILD & COMPILED VERIFICATION
+--------------------------------------------------------------------------------
+- Unit Tests: Executed all project unit tests successfully:
+  Command run: .\gradlew.bat testDebugUnitTest
+  Result: BUILD SUCCESSFUL (all test suites passed).
+- APK Build: Compiled and packaged the final debug APK successfully:
+  Command run: .\gradlew.bat assembleDebug
+  Result: BUILD SUCCESSFUL (APK generated at app/build/outputs/apk/debug/app-debug.apk).

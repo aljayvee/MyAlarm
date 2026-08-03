@@ -1,0 +1,7 @@
+{
+  "latestVersionCode": 16,
+  "latestVersionName": "2.7.2.0-DEV",
+  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.7.2.0-dev/alarm-dev.apk",
+  "forceUpdate": false,
+  "releaseNotes": "Debug Updates:\n• Fixes issue where the update version was not applying.\n• Updated toolchain specs and Gradle daemon criteria.\n• Dynamic release notes and version matching in update dialogs."
+}

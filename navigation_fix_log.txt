@@ -1,0 +1,86 @@
+MYALARM NAVIGATION & LIFE-CYCLE FIX LOG
+======================================
+
+This document records the error analysis, fix implementation, unit testing, verification results, and an orderly summary of the fixes applied to resolve the navigation and rotation issues in the MyAlarm application.
+
+--------------------------------------------------------------------------------
+1. ERROR ANALYSIS
+--------------------------------------------------------------------------------
+1.0 - Rotating the app creates a new instance that initially starts going to home UI.
+- Analysis:
+  * In Android, the default behavior upon orientation changes (like rotating the device) is to destroy the active Activity and recreate it to load resources for the new configuration.
+  * In the original implementation of MainActivity / AppNavigation.kt, the navigation state (currentRoute and backStack) was managed using standard Compose 'remember' structures:
+      var currentRoute by remember { mutableStateOf("home") }
+      val backStack = remember { mutableStateListOf("home") }
+  * Because 'remember' stores state only within the composition lifecycle and does not survive Activity destruction/recreation, any rotation caused all navigation state to be wiped. The newly recreated MainActivity re-composed AppNavigation from scratch, causing it to default to the initial "home" route.
+
+1.1 - Clicking or swiping the back button of the phone in the app closes the app instantly.
+- Analysis:
+  * In Jetpack Compose, back-press events (triggered by clicking or swiping the system back button) are routed to the Activity's OnBackPressedDispatcher.
+  * If a custom navigation stack is built using standard composables (instead of the Jetpack Navigation Component, which automatically registers a back-press handler), the back button press goes directly to the Activity.
+  * Since there was no custom BackHandler registered in AppNavigation.kt to intercept these events and pop screens from our custom 'backStack', the Activity handled the event by immediately closing/finishing the application.
+
+--------------------------------------------------------------------------------
+2. FIX IMPLEMENTATION DETAILS
+--------------------------------------------------------------------------------
+To fix these issues cleanly and robustly, we applied a three-layered approach:
+
+A. Prevent Activity Recreation on Rotation (AndroidManifest.xml)
+- We added 'android:configChanges' to the <activity> block for MainActivity:
+  android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|smallestScreenSize"
+- This instructs the system that MainActivity handles screen orientation changes itself. Consequently, the OS will not destroy and recreate the Activity instance when the phone is rotated.
+
+B. Encapsulate Navigation State & Enable State Restoration (AppNavigationState.kt)
+- To ensure state is saved even if the activity *is* recreated under other system conditions (such as process death, dark mode toggling, or language changes), we refactored navigation state from inline variables into a dedicated, unit-testable class:
+  class AppNavigationState(initialRoute, initialBackStack)
+- We implemented a custom Saver using Compose's 'listSaver' to serialize and deserialize the backstack.
+- In AppNavigation.kt, we instantiated this state with 'rememberSaveable':
+  val navState = rememberSaveable(saver = AppNavigationState.Saver) { AppNavigationState() }
+  This ensures the navigation route and stack are fully restored after any configuration changes or process recreation.
+
+C. Intercept Back Presses using BackHandler (AppNavigation.kt)
+- We integrated the Compose 'BackHandler' component inside AppNavigation:
+  BackHandler(enabled = navState.backStack.size > 1) {
+      navState.navigateBack()
+  }
+- When the backstack has multiple entries (i.e. we are on a detail screen), the handler intercepts the back button and pops the top screen.
+- When the backstack has only one entry (we are on a root tab screen), the handler is disabled, allowing the system to handle the back press (e.g. exit the app).
+
+--------------------------------------------------------------------------------
+3. UNIT TESTING
+--------------------------------------------------------------------------------
+A dedicated JVM unit test class was created to verify the navigation state manager in isolation:
+File: app/src/test/java/com/application/myalarm/NavigationStateTest.kt
+
+It implements the following tests:
+1. testInitialState()
+   - Asserts that the navigation starts at the "home" route and the backstack has size 1.
+2. testNavigate()
+   - Asserts that navigating to new routes pushes them to the backstack and updates currentRoute.
+3. testNavigateBack()
+   - Asserts that navigateBack() pops screens off the stack and updates currentRoute to the previous screen. Also checks that navigateBack() does not pop past the root screen.
+4. testSelectTab()
+   - Asserts that switching tabs clears the stack and sets the new tab as the sole route.
+5. testSaverSaveAndRestore()
+   - Asserts that the Saver successfully serializes the navigation backstack and restores it, reproducing the exact currentRoute and backstack.
+
+* Test Run Verification:
+  Command run: .\gradlew.bat testDebugUnitTest --tests "com.application.myalarm.NavigationStateTest"
+  Result: BUILD SUCCESSFUL. All tests passed.
+
+--------------------------------------------------------------------------------
+4. RIGOROUS BUILD TESTING
+--------------------------------------------------------------------------------
+We ran a full Gradle assembly to ensure that compilation of all modules, source code files, resource manifests, and tests compiles without any warning or build errors.
+  Command run: .\gradlew.bat assembleDebug
+  Result: BUILD SUCCESSFUL (with 39 actionable tasks successfully cached/executed).
+
+--------------------------------------------------------------------------------
+5. SUMMARY OF THE FIX (ORDERLY LIST)
+--------------------------------------------------------------------------------
+1. Modified 'app/src/main/AndroidManifest.xml' to add configChanges to MainActivity, preventing unnecessary activity restarts on rotation.
+2. Created 'app/src/main/java/com/application/myalarm/ui/navigation/AppNavigationState.kt' to hold navigation state (currentRoute, backStack) and define its Saver.
+3. Refactored 'app/src/main/java/com/application/myalarm/ui/navigation/AppNavigation.kt' to import 'BackHandler' and 'rememberSaveable', instantiate 'AppNavigationState', and add a 'BackHandler' component.
+4. Created JVM unit tests in 'app/src/test/java/com/application/myalarm/NavigationStateTest.kt' verifying all navigation actions and saving/restoring serialization.
+5. Executed unit tests and verified all pass successfully.
+6. Compiled and packaged the Android Debug APK to verify build integrity.

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1030248270657",
+    "project_id": "riser-85d80",
+    "storage_bucket": "riser-85d80.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030248270657:android:c867fea777fe45458eefc0",
+        "android_client_info": {
+          "package_name": "com.application.myalarm.prod"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv8S_0jNSrXEp-NlRLlss6Mlq-6AcKmvk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
