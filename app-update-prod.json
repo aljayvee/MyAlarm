@@ -1,7 +1,7 @@
 {
-  "latestVersionCode": 16,
-  "latestVersionName": "2.7.2.0",
-  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.7.2.0-prod/alarm-prod.apk",
+  "latestVersionCode": 22,
+  "latestVersionName": "2.8.6.2",
+  "apkUrl": "https://github.com/aljayvee/MyAlarm/releases/download/v2.8.6.2-prod/riser-prod.apk",
   "forceUpdate": true,
-  "releaseNotes": "Production Release Updates:\n• Fixes Bugs & Performance Enhancements\n• Improved Security & Navigation Stability\n• Accurate Release Notes & Version Matching"
+  "releaseNotes": "Fixed bugs and optimized the performance of the application."
 }
